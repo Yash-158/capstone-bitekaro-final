@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cafe Payment Selection Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">Premium Indian Cafe</h2>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex flex-col items-end mr-4">
+<span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Kiosk ID</span>
+<span class="text-sm font-bold">#DEL-042</span>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="Profile picture of a cafe staff member" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDYt1vfzfRvBUKYCMBQi7qBuQd0ed8v85JISZKr7sSez2VJ3j99qKxdewGxyvgPkGZBaKJfohKNCIi2F1UrVs4a-HyafKECAqcurJiDnQfemdSQjBOHjyT4kCWGBr6uBuCOR94DkScuJ8eVe_nCvQqIqM_GWvU40L_iltGPPPQDUUm70-9H2iealOMXJwLhjlGY5NwQ9_Hvb5aNSElHPjqW4YPNhpVh05kT43nh54oB0wW04B4UoDZuIkLbPrSABfj-O2YAXFFeXFs");'></div>
+</div>
+</header>
+<main class="flex-1 flex justify-center py-10 px-4">
+<div class="max-w-[800px] w-full flex flex-col gap-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-6">
+<div class="size-24 rounded-lg bg-center bg-cover shrink-0" data-alt="Delicious butter chicken and naan platter" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-vVzt9gArKoRAKjQ0NX_tLefYrqxJuBoecvpb4LElea03TAvhfv-NNNuY5VUaW_2IXvc9focNxvySBcO9IiwhTByokcSFtI1TX1w1_JRwib_HQV5SS2vlIUbjZpNZU0UMnQugi6nbKvFhvO6fvDUQIbrM_XhWq4sJJWViNvV22Pi04Nt57KweJOGGqMJp-ca-zm3KqZzJNsurTHuQTRJaKyEvxFyg-FzmysbqVJ0SLDLYuojn4EVfG4ZdtpR_7EordI6m0fa9eaE");'></div>
+<div>
+<h3 class="text-slate-500 text-sm font-medium uppercase tracking-wide mb-1">Total Order Value</h3>
+<div class="text-primary text-4xl font-bold leading-none tracking-tight">₹1,250.00</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full uppercase">3 Items Selected</span>
+<button class="flex items-center gap-2 text-primary font-semibold text-sm hover:underline">
+<span>View Itemized Details</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h2 class="text-2xl font-bold tracking-tight text-slate-800 dark:text-slate-100">Select Payment Method</h2>
+<div class="relative group cursor-pointer transition-all hover:scale-[1.01]">
+<div class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-primary to-blue-400 rounded-l-xl"></div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex items-start gap-6">
+<div class="bg-primary/5 p-3 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl">contactless</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<h4 class="text-xl font-bold">Razorpay</h4>
+<span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase">RECOMMENDED</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Pay ₹1,250.00 securely via our encrypted gateway</p>
+<div class="flex gap-2 pt-1">
+<span class="text-[10px] border border-slate-200 dark:border-slate-700 text-slate-500 px-2 py-0.5 rounded font-bold">UPI</span>
+<span class="text-[10px] border border-slate-200 dark:border-slate-700 text-slate-500 px-2 py-0.5 rounded font-bold">CARD</span>
+<span class="text-[10px] border border-slate-200 dark:border-slate-700 text-slate-500 px-2 py-0.5 rounded font-bold">NETBANKING</span>
+</div>
+</div>
+</div>
+<button class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-primary to-blue-600 text-white font-bold rounded-lg shadow-lg shadow-primary/20 hover:shadow-xl transition-all">
+                                    Pay Now
+                                </button>
+</div>
+</div>
+<div class="group cursor-pointer transition-all hover:scale-[1.01]">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex items-start gap-6">
+<div class="bg-emerald-50 dark:bg-emerald-950/30 p-3 rounded-xl flex items-center justify-center">
+<span class="text-3xl">💵</span>
+</div>
+<div class="space-y-1">
+<h4 class="text-xl font-bold">Pay at Counter</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Place your order and pay with cash/UPI at the billing desk</p>
+</div>
+</div>
+<button class="w-full md:w-auto px-8 py-3 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-bold rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-all">
+                                    Place Order
+                                </button>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 opacity-60">
+<div class="flex items-start gap-6">
+<div class="bg-slate-200 dark:bg-slate-800 p-3 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 text-4xl">loyalty</span>
+</div>
+<div class="space-y-1">
+<h4 class="text-xl font-bold text-slate-500">Cafe Loyalty Points</h4>
+<p class="text-slate-500 text-sm italic">Redeem points for your order (Coming Soon)</p>
+</div>
+</div>
+<div class="w-full md:w-auto px-8 py-3 bg-slate-200 dark:bg-slate-700 text-slate-400 font-bold rounded-lg cursor-not-allowed">
+                                Unavailable
+                            </div>
+</div>
+</div>
+<div class="mt-8 flex flex-wrap justify-center gap-12 border-t border-slate-200 dark:border-slate-800 pt-8">
+<div class="flex items-center gap-3 text-slate-500">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<span class="text-sm font-medium">100% Secure Payment</span>
+</div>
+<div class="flex items-center gap-3 text-slate-500">
+<span class="material-symbols-outlined text-primary">bolt</span>
+<span class="text-sm font-medium">Instant Confirmation</span>
+</div>
+<div class="flex items-center gap-3 text-slate-500">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<span class="text-sm font-medium">24/7 Support</span>
+</div>
+</div>
+</div>
+</main>
+<footer class="py-6 px-10 text-center text-slate-400 text-xs">
+<p>© 2025 Premium Indian Cafe • Powered by CafeNexus Systems</p>
+</footer>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cafe Business Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1152d4",
+                "background-light": "#f6f6f8",
+                "background-dark": "#101622",
+                "accent-coral": "#ff7e67",
+                "accent-teal": "#2dd4bf",
+                "accent-purple": "#a855f7"
+              },
+              fontFamily: {
+                "display": ["Poppins", "Manrope", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #1152d4 0%, #60a5fa 100%);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar (Desktop View hidden on mobile usually, but keeping context for SaaS feel) -->
+<aside class="hidden md:flex w-64 flex-col sidebar-gradient text-white p-6 shrink-0">
+<div class="flex items-center gap-3 mb-10 px-2">
+<div class="size-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined text-white">coffee</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Royal Cafe</h1>
+</div>
+<nav class="flex flex-col gap-2 flex-1">
+<a class="flex items-center gap-4 px-4 py-3 bg-white/10 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 hover:bg-white/5 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 hover:bg-white/5 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 hover:bg-white/5 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-medium">Menu</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 hover:bg-white/5 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">card_membership</span>
+<span class="font-medium">Loyalty</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-white/10 rounded-2xl backdrop-blur-sm">
+<p class="text-xs opacity-70 mb-2 uppercase tracking-widest font-bold">Pro Plan</p>
+<p class="text-sm font-medium mb-3">Upgrade for AI Predict</p>
+<button class="w-full py-2 bg-white text-primary rounded-lg text-xs font-bold">Upgrade Now</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-[#f8f9fb]">
+<!-- Top Header -->
+<header class="sticky top-0 z-30 flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-md border-b border-slate-200">
+<div class="flex flex-col">
+<h2 class="text-lg font-bold text-slate-800">Analytics Overview</h2>
+<p class="text-xs text-slate-500 font-medium">Welcome back, Mumbai Central Branch</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="size-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2.5 right-2.5 size-2 bg-primary rounded-full border-2 border-white"></span>
+</button>
+<div class="size-10 rounded-full bg-primary/10 overflow-hidden border-2 border-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Professional profile headshot of a cafe owner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6lwhHNaAu5tTnlr0MRawdEnIkH2Q4zCQLoid_7DEFC-gkndhLo1LeQqrxR-LJuOhro7rn6plYw59_FEM48TmB5OumBACtGeGA2JvhWtvyv51ORMmZPMCpVFGyTJZLX3M88FRYLyoBRZQ8VlYxknGF799q4NvdFZKANcoEyKFz69iJL1ykwk4t5iDPSMrQ0w9UiGZz0ysyoXBRQvPSD0wZvt4XCFfvfWRvJ7UnfjpGTXpcm17zOslbWPt_IiG8I-hdYr49kcBmHew"/>
+</div>
+</div>
+</header>
+<div class="p-6 space-y-6">
+<!-- Metric Cards Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between group hover:border-primary/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Total Revenue</p>
+<h3 class="text-2xl font-bold text-slate-900">₹4,52,400</h3>
+<p class="text-emerald-500 text-xs font-bold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12.5%
+                            </p>
+</div>
+<div class="p-3 bg-primary/10 text-primary rounded-xl">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between group hover:border-accent-coral/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Orders</p>
+<h3 class="text-2xl font-bold text-slate-900">1,240</h3>
+<p class="text-emerald-500 text-xs font-bold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +8.2%
+                            </p>
+</div>
+<div class="p-3 bg-accent-coral/10 text-accent-coral rounded-xl">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between group hover:border-accent-teal/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Avg Order Value</p>
+<h3 class="text-2xl font-bold text-slate-900">₹365</h3>
+<p class="text-emerald-500 text-xs font-bold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +3.1%
+                            </p>
+</div>
+<div class="p-3 bg-accent-teal/10 text-accent-teal rounded-xl">
+<span class="material-symbols-outlined">receipt</span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-start justify-between group hover:border-accent-purple/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Loyalty Members</p>
+<h3 class="text-2xl font-bold text-slate-900">850</h3>
+<p class="text-emerald-500 text-xs font-bold mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +5.4%
+                            </p>
+</div>
+<div class="p-3 bg-accent-purple/10 text-accent-purple rounded-xl">
+<span class="material-symbols-outlined">stars</span>
+</div>
+</div>
+</div>
+<!-- Main Charts & Insights Row -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Revenue Chart Area -->
+<div class="lg:col-span-2 space-y-6">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+<div class="flex items-center justify-between mb-8">
+<h4 class="font-bold text-slate-800 text-lg">Revenue Over Time</h4>
+<select class="text-xs font-bold border-slate-200 rounded-lg bg-slate-50 text-slate-600 focus:ring-primary">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<!-- Mock Line Chart -->
+<div class="h-64 flex items-end justify-between gap-2 px-2 relative">
+<div class="absolute inset-0 flex flex-col justify-between py-2">
+<div class="w-full border-t border-slate-50"></div>
+<div class="w-full border-t border-slate-50"></div>
+<div class="w-full border-t border-slate-50"></div>
+<div class="w-full border-t border-slate-50"></div>
+</div>
+<div class="relative w-full h-full">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 400 150">
+<path d="M0,100 C50,80 80,110 120,60 C160,30 200,90 250,50 C300,20 350,60 400,40" fill="none" stroke="#1152d4" stroke-linecap="round" stroke-width="4"></path>
+<path d="M0,100 C50,80 80,110 120,60 C160,30 200,90 250,50 C300,20 350,60 400,40 V150 H0 Z" fill="url(#gradient-blue)" opacity="0.1"></path>
+<defs>
+<lineargradient id="gradient-blue" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#1152d4;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#1152d4;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+<!-- Top Items Chart -->
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+<h4 class="font-bold text-slate-800 text-lg mb-6">Top Selling Items</h4>
+<div class="space-y-5">
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-medium">
+<span class="text-slate-700">Masala Chai</span>
+<span class="text-slate-900 font-bold">452 Sales</span>
+</div>
+<div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-medium">
+<span class="text-slate-700">Paneer Tikka Sandwich</span>
+<span class="text-slate-900 font-bold">320 Sales</span>
+</div>
+<div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-accent-coral rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-medium">
+<span class="text-slate-700">Cold Brew Coffee</span>
+<span class="text-slate-900 font-bold">210 Sales</span>
+</div>
+<div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+<div class="h-full bg-accent-teal rounded-full" style="width: 45%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insights Sidebar Panel -->
+<div class="space-y-6">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<h4 class="font-bold text-slate-800 text-lg">AI Insights</h4>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+<h5 class="text-sm font-bold text-emerald-800 mb-1">Peak Performance</h5>
+<p class="text-xs text-emerald-700 leading-relaxed">Sales increased by 22% during 4PM-6PM. Consider staffing 1 extra person during this window.</p>
+</div>
+<div class="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+<h5 class="text-sm font-bold text-amber-800 mb-1">Inventory Alert</h5>
+<p class="text-xs text-amber-700 leading-relaxed">Assam Tea stock is running low. Based on trends, you'll run out by Wednesday afternoon.</p>
+</div>
+<div class="p-4 bg-primary/5 rounded-xl border-l-4 border-primary">
+<h5 class="text-sm font-bold text-primary mb-1">Customer Loyalty</h5>
+<p class="text-xs text-slate-700 leading-relaxed">15 new customers joined the loyalty program today. 4 of them are "Frequent" segment.</p>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full py-3 bg-primary/10 text-primary text-sm font-bold rounded-xl flex items-center justify-center gap-2">
+                                    Full AI Report <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Orders Table -->
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+<div class="p-6 border-b border-slate-100 flex items-center justify-between">
+<h4 class="font-bold text-slate-800 text-lg">Recent Orders</h4>
+<button class="text-primary text-sm font-bold">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Order ID</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Items</th>
+<th class="px-6 py-4">Amount</th>
+<th class="px-6 py-4">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-900">#ORD-4582</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600">RK</div>
+<span class="text-sm font-medium text-slate-700">Rahul Kapoor</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">2x Masala Chai, 1x Vada Pav</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900">₹245.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-bold rounded-full uppercase tracking-tighter">Completed</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-900">#ORD-4581</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600">AS</div>
+<span class="text-sm font-medium text-slate-700">Anjali Singh</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">1x Cold Brew, 1x Croissant</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900">₹420.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-full uppercase tracking-tighter">Preparing</span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-bold text-slate-900">#ORD-4580</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600">VM</div>
+<span class="text-sm font-medium text-slate-700">Vikram Mehta</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">3x Filter Coffee</td>
+<td class="px-6 py-4 text-sm font-bold text-slate-900">₹180.00</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-slate-100 text-slate-700 text-[10px] font-bold rounded-full uppercase tracking-tighter">Cancelled</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Spacer for bottom nav on mobile -->
+<div class="h-20 lg:hidden"></div>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation (Mobile View) -->
+<div class="fixed bottom-0 left-0 right-0 lg:hidden bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 px-4 pb-6 pt-2">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-[10px] font-bold">Dash</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="text-[10px] font-bold">Analytics</span>
+</a>
+<div class="relative -top-6">
+<button class="size-14 bg-primary text-white rounded-2xl shadow-lg shadow-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-[10px] font-bold">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">Profile</span>
+</a>
+</div>
+</div>
+</body></html>

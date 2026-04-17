@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteKaro — Your Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/kiosk.css">
+  <script src="js/app.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</head>
+<body style="background: linear-gradient(160deg, #F0F7FF 0%, #FFFBF5 50%, #F0FFF8 100%); min-height: 100vh;">
+
+<header class="kiosk-header">
+  <button class="back-btn" onclick="window.location.href='menu.html'">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  </button>
+  <h1 class="page-title">Your Order</h1>
+  <span class="item-count-chip" id="itemCountBadge">0 items</span>
+</header>
+
+<main class="cart-layout">
+  <div class="cart-left">
+    
+    <!-- Cart Items Card -->
+    <div class="cart-items-card">
+      <div id="cartItemsList">
+        <!-- JS renders items here -->
+      </div>
+      <!-- Empty state -->
+      <div id="emptyCart" style="display:none">
+        <div class="empty-cart">
+          <span style="font-size:64px">🛒</span>
+          <p>Nothing here yet</p>
+          <button onclick="window.location.href='menu.html'" 
+                  class="btn-outline-blue">Browse Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Special Instructions -->
+    <div class="special-instructions-card">
+      <label class="section-label" style="font-weight:600; font-size:14px; color:#1A237E; display:block; margin-bottom:8px;">Special Requests</label>
+      <textarea id="specialInstructions" 
+                placeholder="E.g. No onions, make it extra spicy...">
+      </textarea>
+    </div>
+
+  </div>
+
+  <div class="cart-right">
+    
+    <!-- Customer Details Form -->
+    <div class="customer-details-section" id="customer-section">
+      <h3 class="section-title">Your Details</h3>
+      
+      <div id="customer-form-area">
+        <div class="input-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="cart-phone" 
+                 placeholder="10-digit mobile number"
+                 maxlength="10"
+                 oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"
+                 onblur="lookupCustomer()">
+        </div>
+        
+        <div id="customer-name-area" style="display:none">
+          <div class="input-group">
+            <label id="name-label">Your Name *</label>
+            <input type="text" id="cart-name" 
+                   placeholder="Enter your name"
+                   maxlength="50">
+          </div>
+        </div>
+        
+        <div id="customer-found-card" style="display:none">
+          <div class="customer-found-banner">
+            <span>👋</span>
+            <div>
+              <p id="found-customer-name" class="found-name"></p>
+              <p id="found-customer-points" class="found-points"></p>
+            </div>
+            <button onclick="resetCustomerForm()" 
+                    class="change-btn">Change</button>
+          </div>
+        </div>
+        
+        <button id="verify-customer-btn" 
+                onclick="verifyAndSetCustomer()"
+                class="verify-btn" 
+                style="display:none">
+          Confirm Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary-card">
+      <h2 class="summary-title">Order Summary</h2>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="summarySubtotal">Rs.0</span>
+      </div>
+      <div class="summary-row discount-row" 
+           id="discountRow" style="display:none">
+        <span>Loyalty Discount</span>
+        <span id="summaryDiscount" class="discount-amount">-Rs.0</span>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-row total-row">
+        <span>Total</span>
+        <span id="summaryTotal" class="total-amount">Rs.0</span>
+      </div>
+      <button id="proceedBtn" 
+              class="btn-proceed" onclick="proceedToPayment()">
+        Proceed to Payment
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Loyalty Card -->
+    <div class="loyalty-card" id="loyaltySection">
+      <div class="loyalty-header">
+        <span class="loyalty-icon">⭐</span>
+        <span class="loyalty-title">Loyalty Rewards</span>
+      </div>
+      
+      <!-- Not logged in state -->
+      <div id="loyaltyNotLoggedIn">
+        <div id="loyaltyMsg" style="font-size: 12px; margin-bottom: 4px;"></div>
+        <p class="loyalty-subtitle">Enter your phone to earn & redeem points</p>
+        <div class="phone-input-row">
+          <input type="tel" id="loyaltyPhoneInput" 
+                 placeholder="10-digit phone number" 
+                 maxlength="10">
+          <button onclick="checkCartLoyalty()" class="btn-check">Check</button>
+        </div>
+      </div>
+
+      <!-- Register state -->
+      <div id="loyaltyRegisterForm" class="hidden">
+        <p class="loyalty-subtitle">New member! Please enter your name.</p>
+        <div class="phone-input-row">
+           <input type="hidden" id="customer-phone-display">
+           <input type="text" id="customer-name-input" placeholder="Your Name" style="flex:1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #FFE082; background: white; font-family: 'Poppins', sans-serif; font-size: 14px; outline: none;">
+           <button class="btn-check" onclick="registerCustomer()">Join</button>
+        </div>
+      </div>
+
+      <!-- Logged in state -->
+      <div id="loyaltyLoggedIn" class="hidden">
+        <div id="welcomeCustomer"></div>
+        <div id="redeemSection" class="hidden mt-2" style="margin-top: 12px;">
+            <span id="redeemLabel" style="font-size: 13px; font-weight: 600; color: #1A237E;"></span>
+            <button id="redeemToggle" onclick="toggleRedeem()" class="btn-check" style="margin-left: 8px; padding: 6px 14px; font-size: 12px;">Redeem</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-sell banner -->
+    <div id="crossSellBanner" class="cross-sell-card" style="display:none">
+      <p style="font-size: 14px; font-weight: 600; color: #00897B; margin-bottom: 10px;">🥤 Complete your order?</p>
+      <div id="crossSellItems" style="display: flex; gap: 8px; overflow-x: auto;" class="no-scrollbar">
+        <!-- JS renders cross-sell here -->
+      </div>
+    </div>
+
+  </div>
+</main>
+</body>
+</html>

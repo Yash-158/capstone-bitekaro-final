@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BiteKaro One — Customers</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1565C0",
+            "background-light": "#F0F4FF",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Poppins", "sans-serif"],
+            "sans": ["Poppins", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "16px", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    body { min-height: max(884px, 100dvh); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @media (max-width: 768px) {
+      .mobile-sidebar-open { transform: translateX(0) !important; }
+      .mobile-overlay-open { display: block !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#F0F4FF] font-display antialiased text-slate-800 flex h-screen overflow-hidden">
+  
+  <!-- Mobile Header & Hamburger -->
+  <div class="md:hidden flex items-center justify-between bg-white p-4 shadow-sm z-40 fixed top-0 w-full hover:shadow-md transition-shadow">
+    <div class="font-bold text-[#0D47A1] text-sm tracking-wider">BUSINESS DASHBOARD</div>
+    <button onclick="toggleSidebar()" class="p-2 bg-slate-100 rounded-lg text-slate-600">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-50 flex w-64 flex-col shrink-0 bg-gradient-to-b from-[#0D47A1] to-[#1565C0] text-white transition-transform duration-300 transform -translate-x-full md:translate-x-0 pt-[68px] md:pt-0">
+    <div class="p-6 flex flex-col items-center border-b border-white/10 hidden md:flex">
+      <div class="mb-2 flex items-center justify-center rounded-2xl bg-white shadow-lg p-2" style="height: 56px; width: 100%;">
+        <img src="/public/images/logo.png" alt="BiteKaro" onerror="this.style.display='none'" style="height:100%; object-fit:contain;">
+      </div>
+      <span class="text-[10px] font-bold uppercase tracking-[2px] text-white/80 mt-2">BUSINESS DASHBOARD</span>
+    </div>
+    
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto w-full">
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="index.html">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="menu-manager.html">
+        <span class="material-symbols-outlined text-[#FFB300]">restaurant_menu</span>
+        <span class="font-medium">Menu Manager</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="orders.html">
+        <span class="material-symbols-outlined text-[#FF6B35]">shopping_cart</span>
+        <span class="font-medium">Live Orders</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white bg-white/20 rounded-lg transition-colors font-bold" href="customers.html">
+        <span class="material-symbols-outlined text-[#4DB6AC]">group</span>
+        <span class="font-medium">Customers</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="loyalty-manager.html">
+        <span class="material-symbols-outlined text-[#CE93D8]">loyalty</span>
+        <span class="font-medium">Loyalty</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-white/10 w-full mt-auto">
+      <button class="flex items-center gap-3 w-full px-4 py-3 text-white/70 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors" onclick="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="font-medium">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#F0F4FF] overflow-y-auto pt-[68px] md:pt-0">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between p-6 md:px-8 bg-white border-b border-slate-200 shrink-0 sticky top-0 md:static z-20">
+      <div>
+        <h2 class="text-2xl font-bold text-[#0D47A1]">Customers</h2>
+        <p class="text-sm text-slate-500 mt-1 hidden md:block">Analytics and relationship management</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="size-10 flex items-center justify-center rounded-full bg-white shadow-sm border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="p-6 md:px-8 space-y-6 max-w-7xl mx-auto w-full">
+      <!-- Summary metrics cards -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Card 1 -->
+        <div class="flex flex-col gap-2 rounded-2xl p-6 bg-[#1565C0] text-white shadow-[0_4px_20px_rgba(21,101,192,0.15)] relative overflow-hidden">
+          <div class="absolute -right-4 -top-4 opacity-10">
+            <span class="material-symbols-outlined" style="font-size:120px">group</span>
+          </div>
+          <div class="flex items-center justify-between relative z-10">
+            <span class="material-symbols-outlined text-white/80">group</span>
+          </div>
+          <p class="text-white/80 text-sm font-medium mt-2 relative z-10">Total Customers</p>
+          <p class="text-3xl font-bold leading-tight relative z-10" id="mTotal">0</p>
+        </div>
+        
+        <!-- Card 2 -->
+        <div class="flex flex-col gap-2 rounded-2xl p-6 bg-[#4DB6AC] text-white shadow-[0_4px_20px_rgba(77,182,172,0.15)] relative overflow-hidden">
+          <div class="absolute -right-4 -top-4 opacity-10">
+            <span class="material-symbols-outlined" style="font-size:120px">payments</span>
+          </div>
+          <div class="flex items-center justify-between relative z-10">
+            <span class="material-symbols-outlined text-white/80">payments</span>
+          </div>
+          <p class="text-white/80 text-sm font-medium mt-2 relative z-10">Avg. Spend</p>
+          <p class="text-3xl font-bold leading-tight relative z-10" id="mAvgSpend">Rs.0</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flex flex-col gap-2 rounded-2xl p-6 bg-[#FFB300] text-white shadow-[0_4px_20px_rgba(255,179,0,0.15)] relative overflow-hidden">
+          <div class="absolute -right-4 -top-4 opacity-10">
+            <span class="material-symbols-outlined" style="font-size:120px">stars</span>
+          </div>
+          <div class="flex items-center justify-between relative z-10">
+            <span class="material-symbols-outlined text-white/80">stars</span>
+          </div>
+          <p class="text-white/80 text-sm font-medium mt-2 relative z-10">Top Loyalty Points</p>
+          <p class="text-3xl font-bold leading-tight relative z-10" id="mTopPoints">0</p>
+        </div>
+      </section>
+
+      <!-- Search -->
+      <section class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div class="relative w-full sm:max-w-md">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <span class="material-symbols-outlined text-slate-400">search</span>
+          </div>
+          <input class="block w-full pl-11 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#1565C0] focus:border-transparent text-sm shadow-sm transition-all" placeholder="Search by name or phone..." type="text" id="searchInput" oninput="filterCustomers(this.value)"/>
+        </div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="bg-white rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.06)] overflow-hidden border border-slate-100">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[800px]">
+            <thead class="bg-blue-50/50">
+              <tr>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider">#</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider">Customer</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider">Phone</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider">Points</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider text-center">Orders</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider text-right">Spent</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider">Last Visit</th>
+                <th class="px-6 py-4 text-xs font-semibold text-[#0D47A1] uppercase tracking-wider text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="custBody" class="divide-y divide-slate-100">
+              <tr>
+                <td colspan="8" class="px-6 py-12 text-center text-slate-500">
+                  <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#1565C0] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                  <p class="mt-2 text-sm font-medium">Loading customers...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Points Modal -->
+  <div id="pointsOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="bg-white rounded-[16px] shadow-xl w-full max-w-md overflow-hidden animate-[modalScale_0.2s_ease-out]">
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <h3 class="font-bold text-lg text-[#0D47A1]">Adjust Points</h3>
+        <button class="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-full hover:bg-slate-100" onclick="document.getElementById('pointsOverlay').classList.add('hidden')">
+          <span class="material-symbols-outlined shrink-0 text-xl">close</span>
+        </button>
+      </div>
+      <div class="p-6 space-y-4">
+        <p class="text-sm text-slate-500 mb-2">Customer: <strong id="adjName" class="text-slate-800"></strong></p>
+        
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Points Change</label>
+          <input type="number" id="adjPoints" class="block w-full rounded-lg border-slate-200 shadow-sm focus:border-[#1565C0] focus:ring focus:ring-[#1565C0] focus:ring-opacity-50 text-sm px-4 py-2.5 outline-none" placeholder="e.g. 50 or -20">
+          <p class="text-xs text-slate-500 mt-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">info</span> Use negative numbers to deduct points</p>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Reason</label>
+          <input type="text" id="adjReason" class="block w-full rounded-lg border-slate-200 shadow-sm focus:border-[#1565C0] focus:ring focus:ring-[#1565C0] focus:ring-opacity-50 text-sm px-4 py-2.5 outline-none" placeholder="Bonus, correction, etc.">
+        </div>
+      </div>
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
+        <button class="px-4 py-2 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors" onclick="document.getElementById('pointsOverlay').classList.add('hidden')">Cancel</button>
+        <button class="px-4 py-2 text-sm font-semibold text-white bg-[#1565C0] border border-transparent rounded-lg hover:bg-[#0D47A1] shadow-sm transition-colors" onclick="submitAdjust()">Submit Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes modalScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  </style>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+    const token = localStorage.getItem('bitekaro_token');
+    if (!token) window.location.href = 'login.html';
+    const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+    let allCustomers = [];
+    let adjustId = null;
+
+    async function loadCustomers() {
+      try {
+        const res = await fetch(API + '/loyalty/members', { headers });
+        const data = await res.json();
+        allCustomers = data.members || [];
+        document.getElementById('mTotal').textContent = allCustomers.length;
+        if (allCustomers.length > 0) {
+          const avgSpend = allCustomers.reduce((s,c) => s + parseFloat(c.total_spent || 0), 0) / allCustomers.length;
+          document.getElementById('mAvgSpend').textContent = 'Rs.' + Math.round(avgSpend);
+          document.getElementById('mTopPoints').textContent = allCustomers[0].loyalty_points || 0;
+        }
+        renderCustomers(allCustomers);
+      } catch(e) { console.error(e); }
+    }
+
+    function renderCustomers(customers) {
+      const tbody = document.getElementById('custBody');
+      if (customers.length === 0) { 
+        tbody.innerHTML = '<tr><td colspan="8" class="px-6 py-12 text-center text-slate-500">No customers found matching criteria</td></tr>'; 
+        return; 
+      }
+      tbody.innerHTML = customers.map((c, i) => {
+        const phone = c.phone ? 'XXXXXX' + c.phone.slice(-4) : 'N/A';
+        const lastVisit = c.last_visit ? new Date(c.last_visit).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : 'Never';
+        const initials = (c.name || 'U').substring(0,2).toUpperCase();
+        
+        // Colors for avatar backgrounds
+        const colors = ['bg-blue-100 text-blue-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-purple-100 text-purple-700', 'bg-rose-100 text-rose-700'];
+        const colorClass = colors[i % colors.length];
+
+        return `<tr class="hover:bg-blue-50/40 transition-colors">
+          <td class="px-6 py-4 text-sm font-medium text-slate-400">${i + 1}</td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+              <div class="h-9 w-9 rounded-full ${colorClass} flex items-center justify-center font-bold text-xs shrink-0">${initials}</div>
+              <div class="min-w-0">
+                <p class="font-bold text-slate-900 text-sm truncate">${c.name || 'Unnamed'}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 text-sm text-slate-600">${phone}</td>
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px] text-amber-500 fill-amber-500">star</span>
+              <strong class="text-slate-800">${c.loyalty_points || 0}</strong>
+            </div>
+          </td>
+          <td class="px-6 py-4 text-sm text-center font-medium text-slate-700">${c.total_orders || 0}</td>
+          <td class="px-6 py-4 text-sm font-bold text-[#1565C0] text-right">Rs.${parseFloat(c.total_spent || 0).toFixed(0)}</td>
+          <td class="px-6 py-4 text-sm text-slate-500">${lastVisit}</td>
+          <td class="px-6 py-4 text-right">
+            <button class="px-3 py-1.5 text-xs font-bold text-[#1565C0] border border-[#1565C0] rounded-lg hover:bg-blue-50 focus:ring-2 focus:ring-[#1565C0]/30 transition-all whitespace-nowrap" onclick="openAdjust('${c.id}','${c.name ? c.name.replace(/'/g, "\\'") : 'Customer'}')">Adjust Points</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function filterCustomers(q) {
+      const query = q.toLowerCase().trim();
+      if (!query) { renderCustomers(allCustomers); return; }
+      renderCustomers(allCustomers.filter(c =>
+        (c.name || '').toLowerCase().includes(query) || (c.phone || '').includes(query)
+      ));
+    }
+
+    function openAdjust(id, name) {
+      adjustId = id;
+      document.getElementById('adjName').textContent = name;
+      document.getElementById('adjPoints').value = '';
+      document.getElementById('adjReason').value = '';
+      document.getElementById('pointsOverlay').classList.remove('hidden');
+    }
+
+    async function submitAdjust() {
+      const points_change = parseInt(document.getElementById('adjPoints').value);
+      const description = document.getElementById('adjReason').value.trim();
+      if (!points_change || isNaN(points_change)) { showToast('Enter a valid points amount', 'error'); return; }
+      try {
+        await fetch(API + '/loyalty/' + adjustId + '/points', {
+          method: 'PATCH', headers,
+          body: JSON.stringify({ points_change, description: description || 'Manual adjustment' })
+        });
+        showToast('Points updated successfully!', 'success');
+        document.getElementById('pointsOverlay').classList.add('hidden');
+        loadCustomers();
+      } catch(e) { showToast('Update failed', 'error'); }
+    }
+
+    function showToast(msg, type = 'info') {
+      let c = document.querySelector('.toast-container');
+      if (!c) { c = document.createElement('div'); c.className = 'toast-container fixed bottom-4 right-4 z-50 flex flex-col gap-2'; document.body.appendChild(c); }
+      const t = document.createElement('div'); 
+      t.className = `px-4 py-3 rounded-lg shadow-lg font-medium text-white transition-opacity duration-300 ${type === 'error' ? 'bg-red-500' : 'bg-[#00897B]'}`; 
+      t.textContent = msg; 
+      c.appendChild(t);
+      setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    function toggleSidebar() { 
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebarOverlay').classList.toggle('hidden'); 
+    }
+    
+    function logout() { localStorage.removeItem('bitekaro_token'); localStorage.removeItem('bitekaro_user'); window.location.href = 'login.html'; }
+
+    loadCustomers();
+  </script>
+</body>
+</html>

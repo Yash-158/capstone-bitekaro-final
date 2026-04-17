@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<title>Premium Cafe Kiosk</title>
+</head>
+<body class="bg-background-light font-display antialiased">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Left Side: 55% Hero Section -->
+<div class="w-[55%] h-full bg-gradient-to-br from-[#0a2e7a] via-[#1152d4] to-[#60a5fa] flex flex-col p-16 justify-between relative overflow-hidden">
+<!-- Decorative Elements -->
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+<div class="relative z-10 space-y-12">
+<!-- Logo Container -->
+<div class="bg-white w-20 h-20 rounded-xl flex items-center justify-center shadow-lg">
+<div class="text-primary size-10">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+</div>
+<!-- Time & Date -->
+<div class="text-white">
+<h1 class="text-[80px] font-extrabold leading-none tracking-tight">12:45 <span class="text-[40px] font-medium opacity-80">PM</span></h1>
+<p class="text-lg font-medium opacity-90 mt-2">Monday, 24 October 2025</p>
+<h2 class="text-[28px] font-bold mt-8">Good Afternoon, Guest</h2>
+</div>
+</div>
+<!-- Loyalty Glassmorphism Card -->
+<div class="relative z-10">
+<div class="backdrop-blur-xl bg-white/10 border border-white/20 rounded-xl p-8 shadow-2xl max-w-lg">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-white">loyalty</span>
+<p class="text-white text-lg font-bold">Loyalty Rewards</p>
+</div>
+<p class="text-white/80 text-base mb-6">Enter your phone number to earn points and unlock exclusive cafe offers.</p>
+<div class="flex gap-3">
+<div class="relative flex-1">
+<input class="w-full bg-white/10 border border-white/20 rounded-lg py-3 px-4 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all" placeholder="+91 00000 00000" type="tel"/>
+</div>
+<button class="bg-white text-primary px-8 rounded-lg font-bold hover:bg-opacity-90 transition-colors shadow-lg">
+                            Submit
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: 45% Mood Selection -->
+<div class="w-[45%] h-full bg-white flex flex-col p-16 justify-center">
+<div class="max-w-md mx-auto w-full">
+<header class="mb-10 text-center">
+<h3 class="text-slate-900 text-3xl font-extrabold mb-2">How are you feeling?</h3>
+<p class="text-slate-500 text-lg">Select your mood for a curated menu recommendation</p>
+</header>
+<!-- 2x2 Mood Grid -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Happy Mood -->
+<button class="group relative flex flex-col items-center justify-center h-40 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl border border-yellow-200 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+<div class="absolute inset-0 bg-yellow-400 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-yellow-600 text-5xl mb-3">light_mode</span>
+<span class="text-slate-800 font-bold text-lg">Happy</span>
+</button>
+<!-- Tired Mood -->
+<button class="group relative flex flex-col items-center justify-center h-40 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-xl border border-purple-200 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+<div class="absolute inset-0 bg-indigo-400 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-indigo-600 text-5xl mb-3">bedtime</span>
+<span class="text-slate-800 font-bold text-lg">Tired</span>
+</button>
+<!-- Thirsty Mood -->
+<button class="group relative flex flex-col items-center justify-center h-40 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl border border-blue-200 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+<div class="absolute inset-0 bg-cyan-400 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-cyan-600 text-5xl mb-3">water_drop</span>
+<span class="text-slate-800 font-bold text-lg">Thirsty</span>
+</button>
+<!-- Hungry Mood -->
+<button class="group relative flex flex-col items-center justify-center h-40 bg-gradient-to-br from-rose-100 to-orange-100 rounded-xl border border-rose-200 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+<div class="absolute inset-0 bg-rose-400 opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-rose-600 text-5xl mb-3">restaurant</span>
+<span class="text-slate-800 font-bold text-lg">Hungry</span>
+</button>
+</div>
+<div class="mt-12 text-center">
+<button class="text-slate-400 font-medium hover:text-primary transition-colors flex items-center justify-center gap-2 mx-auto">
+<span>Browse full menu instead</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Footer for Kiosk Info -->
+<div class="mt-auto pt-10 border-t border-slate-100 flex justify-between items-center opacity-40">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-900">Premium Cafe Terminal #042</span>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-lg">language</span>
+<span class="material-symbols-outlined text-lg">help_outline</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>

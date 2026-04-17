@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "poppins": ["Poppins", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .analog-clock {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background: white;
+            border-radius: 4px;
+        }
+        .hour-hand { width: 4px; height: 40px; transform: rotate(45deg); }
+        .minute-hand { width: 3px; height: 60px; transform: rotate(180deg); }
+        .center-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark h-screen overflow-hidden">
+<div class="flex h-full w-full">
+<!-- Left Section: Branding & Time -->
+<div class="w-[45%] h-full bg-gradient-to-br from-[#0a2e7a] via-primary to-[#60a5fa] p-8 flex flex-col justify-between relative overflow-hidden">
+<!-- Decorative circle -->
+<div class="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg mb-12">
+<span class="material-symbols-outlined text-primary text-3xl">restaurant</span>
+</div>
+<div class="space-y-2">
+<h2 class="font-poppins text-white/80 text-xl font-medium">Namaste,</h2>
+<h1 class="font-poppins text-white text-5xl font-bold leading-tight">Good<br/>Morning</h1>
+</div>
+<div class="mt-12 flex flex-col items-center">
+<div class="analog-clock">
+<div class="clock-hand hour-hand"></div>
+<div class="clock-hand minute-hand"></div>
+<div class="center-dot"></div>
+<!-- Numbers -->
+<span class="absolute top-2 left-1/2 -translate-x-1/2 text-white font-bold">12</span>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-white font-bold">3</span>
+<span class="absolute bottom-2 left-1/2 -translate-x-1/2 text-white font-bold">6</span>
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-white font-bold">9</span>
+</div>
+<div class="mt-4 font-poppins text-white text-3xl font-light">10:30 AM</div>
+</div>
+</div>
+<!-- Glassmorphism Loyalty Card -->
+<div class="glass rounded-xl p-6 relative z-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-white">loyalty</span>
+<p class="text-white font-semibold">Loyalty Rewards</p>
+</div>
+<p class="text-white/80 text-sm mb-4 leading-relaxed">Enter your phone number to earn points on this order.</p>
+<div class="flex gap-2">
+<div class="flex-1 bg-white/20 rounded-lg h-12 flex items-center px-4 text-white placeholder-white/50 border border-white/10">
+                        +91 • 00000 00000
+                    </div>
+<button class="bg-white text-primary font-bold px-4 rounded-lg hover:bg-opacity-90 transition-all shadow-md">
+                        Join
+                    </button>
+</div>
+</div>
+</div>
+<!-- Right Section: Mood Selection -->
+<div class="flex-1 h-full bg-white dark:bg-slate-900 p-10 flex flex-col justify-center">
+<div class="max-w-2xl mx-auto w-full">
+<div class="mb-10">
+<h3 class="text-slate-500 dark:text-slate-400 font-medium text-lg mb-1 uppercase tracking-widest">Select your vibe</h3>
+<h2 class="font-poppins text-slate-900 dark:text-white text-4xl font-bold">How are you feeling?</h2>
+</div>
+<!-- Mood Grid 2x2 -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Happy -->
+<button class="group relative overflow-hidden rounded-xl p-8 text-left transition-all hover:scale-[1.02] shadow-sm hover:shadow-xl bg-gradient-to-br from-yellow-50 to-orange-100 border border-yellow-200">
+<div class="mb-6 flex items-center justify-between">
+<span class="text-5xl">😊</span>
+<span class="material-symbols-outlined text-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<h4 class="font-poppins text-2xl font-bold text-slate-800">Happy</h4>
+<p class="text-slate-600 font-medium">Celebrate with a treat</p>
+</button>
+<!-- Tired -->
+<button class="group relative overflow-hidden rounded-xl p-8 text-left transition-all hover:scale-[1.02] shadow-sm hover:shadow-xl bg-gradient-to-br from-purple-50 to-indigo-100 border border-purple-200">
+<div class="mb-6 flex items-center justify-between">
+<span class="text-5xl">😴</span>
+<span class="material-symbols-outlined text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<h4 class="font-poppins text-2xl font-bold text-slate-800">Tired</h4>
+<p class="text-slate-600 font-medium">Needs a caffeine kick</p>
+</button>
+<!-- Thirsty -->
+<button class="group relative overflow-hidden rounded-xl p-8 text-left transition-all hover:scale-[1.02] shadow-sm hover:shadow-xl bg-gradient-to-br from-blue-50 to-cyan-100 border border-blue-200">
+<div class="mb-6 flex items-center justify-between">
+<span class="text-5xl">🥤</span>
+<span class="material-symbols-outlined text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<h4 class="font-poppins text-2xl font-bold text-slate-800">Thirsty</h4>
+<p class="text-slate-600 font-medium">Cool &amp; refreshing sips</p>
+</button>
+<!-- Hungry -->
+<button class="group relative overflow-hidden rounded-xl p-8 text-left transition-all hover:scale-[1.02] shadow-sm hover:shadow-xl bg-gradient-to-br from-orange-50 to-rose-100 border border-orange-200">
+<div class="mb-6 flex items-center justify-between">
+<span class="text-5xl">🍔</span>
+<span class="material-symbols-outlined text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+</div>
+<h4 class="font-poppins text-2xl font-bold text-slate-800">Hungry</h4>
+<p class="text-slate-600 font-medium">Hearty Indian delights</p>
+</button>
+</div>
+<div class="mt-12 flex justify-between items-center text-slate-400 border-t border-slate-100 pt-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">language</span>
+<span class="text-sm font-medium">English / Hindi</span>
+</div>
+<div class="flex gap-4">
+<button class="text-sm font-bold flex items-center gap-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">accessibility</span> Assistance
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Nav Bar Emulation (iOS Style) -->
+<div class="fixed bottom-0 left-0 right-0 h-24 bg-white/80 backdrop-blur-lg border-t border-slate-200 flex items-center justify-center px-8 z-50">
+<div class="flex items-center justify-between w-full max-w-4xl">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-3xl font-variation-fill">home</span>
+<span class="text-xs font-bold uppercase tracking-widest">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">restaurant_menu</span>
+<span class="text-xs font-bold uppercase tracking-widest">Menu</span>
+</button>
+<div class="relative -top-10">
+<button class="bg-primary text-white w-20 h-20 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">shopping_cart</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">receipt_long</span>
+<span class="text-xs font-bold uppercase tracking-widest">Orders</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+<span class="text-xs font-bold uppercase tracking-widest">Profile</span>
+</button>
+</div>
+</div>
+</body></html>

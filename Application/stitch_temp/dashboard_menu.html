@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cafe Menu Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Poppins', sans-serif; }
+        .sidebar-gradient { background: linear-gradient(180deg, #137fec 0%, #0a4d8f 100%); }
+        .btn-gradient { background: linear-gradient(90deg, #137fec 0%, #409cf3 100%); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar - Fixed for Desktop/Tablet but styled for context -->
+<aside class="hidden md:flex w-60 sidebar-gradient flex-col shrink-0">
+<div class="p-6">
+<h1 class="text-white text-xl font-bold tracking-tight">Premium Cafe</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white bg-white/20 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-medium">Menu Manager</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-primary/5 dark:bg-background-dark overflow-y-auto">
+<!-- Top Bar -->
+<header class="flex items-center justify-between p-6 bg-white dark:bg-slate-900 border-b border-primary/10">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100">Menu Manager</h2>
+<p class="text-sm text-slate-500">Manage your cafe offerings and stock</p>
+</div>
+<button class="btn-gradient text-white px-5 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+<span>Add New Item</span>
+</button>
+</header>
+<!-- Category Filters -->
+<div class="px-6 py-4 flex gap-3 overflow-x-auto no-scrollbar">
+<button class="px-6 py-2 rounded-full bg-primary text-white font-medium shadow-md">All</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-primary/10 transition-colors">Hot</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-primary/10 transition-colors">Cold</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-primary/10 transition-colors">Snacks</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-primary/10 transition-colors">Meals</button>
+<button class="px-6 py-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-primary/10 transition-colors">Desserts</button>
+</div>
+<!-- Content Grid / Table -->
+<div class="px-6 pb-24 md:pb-6">
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-primary/10 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary/5 dark:bg-slate-800/50">
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Item</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Category</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">Price</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">Stock</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 text-center">Status</th>
+<th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<!-- Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<img class="w-[60px] h-[60px] rounded-lg object-cover" data-alt="Close up of a hot cafe latte with foam art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDY12Gym64GA6H6vAVvkeCGSJ0fHacFsgHRS3A5_TeySX4Zmv2Arpi-zxG0GqXoXYLEgoGXQTziRGBMx0fWStKq3-xtbADMwGK8txUjJYV_aFlXx8dCxbRkOeqKKv5PlblA5G1l-M2gJt8CnMmv6d-KGJ5pHT1C-6Qj1bFpsXZVAE-nFPzeeuSyjiNrHyyZ2BJjU9OZQ_xQIwMNuOPQ5Sku8B8eQwPn96CEV0MfjXPm1bXrW_eSBunGqytnpnzLelYwHRulG_5ga9SD"/>
+<span class="font-bold text-slate-800 dark:text-slate-200">Caramel Macchiato</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-600">Hot</span>
+</td>
+<td class="px-6 py-4 text-center font-semibold">$5.50</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium">45</span>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center">
+<div class="w-10 h-5 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-white rounded-full ml-auto"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Low Stock) -->
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<img class="w-[60px] h-[60px] rounded-lg object-cover" data-alt="Iced cold brew coffee in a glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6elEeJc5ePjHmKmMNFEreQXiHP9kqfWfEQd2etTAvbbFlUExwiJiJICeUoCF8zB-PECSWrjNugXN8QTjWSJx2O7g8iuTg8HPhpdo-SPFdMosXmlMkQCAamtF7fpk-jUFtuip9gl9C7t6HMFIQHNDCVw36ARiSDTWbAQfFzhMb_xnGCSSTVghkhuXjyGhYoUcuA9o3Fw22a_on1aKD4ClD6IMh4gOtMu7zujKGcU0EfNPTaf6M_WdGYLcEkr5qCnv-aETj4mgXZABe"/>
+<span class="font-bold text-slate-800 dark:text-slate-200">Nitro Cold Brew</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">Cold</span>
+</td>
+<td class="px-6 py-4 text-center font-semibold">$6.25</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-100 text-rose-600 ring-1 ring-rose-200">Low: 8</span>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center">
+<div class="w-10 h-5 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-white rounded-full ml-auto"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<img class="w-[60px] h-[60px] rounded-lg object-cover" data-alt="Two gourmet chocolate cupcakes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4DsUhzpiiif8H8CZyxiyqL7tQDAggFpycEC1KBMr8z9GdK9qACElgXKxBKaqX_oP2su7ILkwuZIIunaQ-lf2ui-MCrbtZTssIqYgTSBrUz8y9J0JYyRjohuegRAUsd0ULJMDR1AnSvpaQ3zemt0aebil-Y_M6pmK3I-WSN7Evr-Hhnenql5xF-EmA14ZRV6htq-_mQtjIgNzUiBt_DrHNV18zwVLJY43AIeoaUI577N-RikcEddT7lXtMxPgeoMjLNrLrsH_auUKE"/>
+<span class="font-bold text-slate-800 dark:text-slate-200">Double Choc Cupcake</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-600">Desserts</span>
+</td>
+<td class="px-6 py-4 text-center font-semibold">$3.75</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium">12</span>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center">
+<div class="w-10 h-5 bg-slate-300 dark:bg-slate-700 rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-white rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<img class="w-[60px] h-[60px] rounded-lg object-cover" data-alt="Avocado toast on rustic bread" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6IARb-AZZna6ctRr6Zv4Kwcecn5czaZMaJ9ucXzezVIWkvj3kqZb9vClS8nQE3oA4XC5AWqyuPUxZq3MwvewZJG2ynvJdzirZ9z1JvQxSSUhQZM0jYSxLHgWnwgHC6amYBKnYGovXXWwf1EL-lAYatDl6Ki3x4LlfBEPKMvxOq114oZMFG8Tab-OYgEJsIhwXrcEW6e5EitxK-imgoycM-WjAoXOjeyrQmyGX45UGemV55-vR5QPcV94uLjJ4Tj6BejpYlMVG1Doy"/>
+<span class="font-bold text-slate-800 dark:text-slate-200">Avocado Smashed Toast</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-600">Meals</span>
+</td>
+<td class="px-6 py-4 text-center font-semibold">$12.00</td>
+<td class="px-6 py-4 text-center">
+<span class="font-medium">20</span>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center">
+<div class="w-10 h-5 bg-primary rounded-full relative flex items-center px-1">
+<div class="w-3.5 h-3.5 bg-white rounded-full ml-auto"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary/10 rounded-lg"><span class="material-symbols-outlined text-sm">edit</span></button>
+<button class="p-2 text-rose-500 hover:bg-rose-50 rounded-lg"><span class="material-symbols-outlined text-sm">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination (Visual only) -->
+<div class="p-4 bg-primary/5 flex items-center justify-between border-t border-primary/10">
+<span class="text-sm text-slate-500">Showing 1-4 of 24 items</span>
+<div class="flex gap-2">
+<button class="p-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-lg text-slate-400 cursor-not-allowed"><span class="material-symbols-outlined text-base">chevron_left</span></button>
+<button class="p-2 bg-white dark:bg-slate-800 border border-primary/10 rounded-lg text-primary hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-base">chevron_right</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-primary/10 md:hidden z-50">
+<div class="flex items-center justify-around p-2">
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">house</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">restaurant_menu</span>
+<span class="text-[10px] font-bold">Menu</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-[10px] font-medium">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BiteKaro One — Loyalty Manager</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1565C0",
+            "background-light": "#F0F4FF",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Poppins", "sans-serif"],
+            "sans": ["Poppins", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "16px", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    body { min-height: max(884px, 100dvh); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @media (max-width: 768px) {
+      .mobile-sidebar-open { transform: translateX(0) !important; }
+      .mobile-overlay-open { display: block !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#F0F4FF] font-display antialiased text-slate-800 flex h-screen overflow-hidden">
+  
+  <!-- Mobile Header & Hamburger -->
+  <div class="md:hidden flex items-center justify-between bg-white p-4 shadow-sm z-40 fixed top-0 w-full hover:shadow-md transition-shadow">
+    <div class="font-bold text-[#0D47A1] text-sm tracking-wider">BUSINESS DASHBOARD</div>
+    <button onclick="toggleSidebar()" class="p-2 bg-slate-100 rounded-lg text-slate-600">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-50 flex w-64 flex-col shrink-0 bg-gradient-to-b from-[#0D47A1] to-[#1565C0] text-white transition-transform duration-300 transform -translate-x-full md:translate-x-0 pt-[68px] md:pt-0">
+    <div class="p-6 flex flex-col items-center border-b border-white/10 hidden md:flex">
+      <div class="mb-2 flex items-center justify-center rounded-2xl bg-white shadow-lg p-2" style="height: 56px; width: 100%;">
+        <img src="/public/images/logo.png" alt="BiteKaro" onerror="this.style.display='none'" style="height:100%; object-fit:contain;">
+      </div>
+      <span class="text-[10px] font-bold uppercase tracking-[2px] text-white/80 mt-2">BUSINESS DASHBOARD</span>
+    </div>
+    
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto w-full relative">
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="index.html">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="menu-manager.html">
+        <span class="material-symbols-outlined text-[#FFB300]">restaurant_menu</span>
+        <span class="font-medium">Menu Manager</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="orders.html">
+        <span class="material-symbols-outlined text-[#FF6B35]">shopping_cart</span>
+        <span class="font-medium">Live Orders</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="customers.html">
+        <span class="material-symbols-outlined text-[#4DB6AC]">group</span>
+        <span class="font-medium">Customers</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white bg-white/20 rounded-lg transition-colors font-bold" href="loyalty-manager.html">
+        <span class="material-symbols-outlined text-[#CE93D8]">loyalty</span>
+        <span class="font-medium">Loyalty</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-white/10 w-full mt-auto">
+      <button class="flex items-center gap-3 w-full px-4 py-3 text-white/70 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors" onclick="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="font-medium">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#F0F4FF] overflow-y-auto pt-[68px] md:pt-0 pb-10">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between p-6 md:px-8 bg-white border-b border-slate-200 shrink-0 sticky top-0 md:static z-20">
+      <div>
+        <h2 class="text-2xl font-bold text-[#0D47A1]">Loyalty Manager</h2>
+        <p class="text-sm text-slate-500 mt-1 hidden md:block">Leaderboards and point adjustments</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="size-10 flex items-center justify-center rounded-full bg-white shadow-sm border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="p-6 md:px-8 space-y-6 max-w-7xl mx-auto w-full">
+      <!-- Summary metrics cards -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Members Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(21,101,192,0.06)] relative overflow-hidden group">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <p class="text-slate-500 text-sm font-semibold">Total Members</p>
+              <h3 class="text-3xl font-extrabold text-[#1565C0] mt-1" id="sTotalMembers">0</h3>
+            </div>
+            <div class="p-2.5 bg-blue-50 text-[#1565C0] rounded-xl group-hover:bg-blue-100 transition-colors">
+              <span class="material-symbols-outlined text-xl">person_add</span>
+            </div>
+          </div>
+          <div class="h-10 w-full flex items-end">
+            <svg class="w-full h-full text-blue-100" preserveaspectratio="none" viewbox="0 0 100 30">
+              <path d="M0,25 Q15,5 30,20 T60,10 T100,25" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Points Issued Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(21,101,192,0.06)] relative overflow-hidden group">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <p class="text-slate-500 text-sm font-semibold">Points Issued</p>
+              <h3 class="text-3xl font-extrabold text-[#00897B] mt-1" id="sIssued">0</h3>
+            </div>
+            <div class="p-2.5 bg-teal-50 text-[#00897B] rounded-xl group-hover:bg-teal-100 transition-colors">
+              <span class="material-symbols-outlined text-xl">toll</span>
+            </div>
+          </div>
+          <div class="h-10 w-full flex items-end">
+            <svg class="w-full h-full text-teal-100" preserveaspectratio="none" viewbox="0 0 100 30">
+              <path d="M0,15 Q20,25 40,10 T80,20 T100,5" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Points Redeemed Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(21,101,192,0.06)] relative overflow-hidden group">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <p class="text-slate-500 text-sm font-semibold">Points Redeemed</p>
+              <h3 class="text-3xl font-extrabold text-[#FF6B35] mt-1" id="sRedeemed">0</h3>
+            </div>
+            <div class="p-2.5 bg-orange-50 text-[#FF6B35] rounded-xl group-hover:bg-orange-100 transition-colors">
+              <span class="material-symbols-outlined text-xl">redeem</span>
+            </div>
+          </div>
+          <div class="h-10 w-full flex items-end">
+            <svg class="w-full h-full text-orange-100" preserveaspectratio="none" viewbox="0 0 100 30">
+              <path d="M0,10 Q25,30 50,15 T100,20" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Manual Adjustment Action Box -->
+        <section class="lg:col-span-1 rounded-[16px] bg-white border border-slate-100 shadow-[0_4px_24px_rgba(21,101,192,0.06)] h-max overflow-hidden">
+          <div class="px-6 py-5 border-b border-slate-100 bg-[#1565C0] text-white">
+            <h3 class="font-bold text-lg flex items-center gap-2"><span class="material-symbols-outlined">manage_accounts</span> Manual Point Adjustment</h3>
+            <p class="text-white/80 text-xs mt-1 font-medium">Add or remove points directly</p>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex gap-2 mb-4">
+              <div class="relative flex-1">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <span class="material-symbols-outlined text-slate-400 text-[20px]">smartphone</span>
+                </div>
+                <input class="block w-full pl-10 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#1565C0] focus:border-transparent text-sm transition-all focus:bg-white outline-none" placeholder="Search by phone..." type="text" id="lookupPhone" maxlength="10"/>
+              </div>
+              <button class="bg-[#1565C0] hover:bg-[#0D47A1] text-white px-4 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-colors" onclick="lookupCustomer()">Search</button>
+            </div>
+
+            <!-- Pre-search state / Empty -->
+            <div id="lookupEmpty" class="hidden py-6 text-center text-slate-400">
+              <span class="material-symbols-outlined text-4xl mb-2 opacity-50">search_off</span>
+              <p class="text-sm">No customer found with that number.</p>
+            </div>
+
+            <!-- Result Box -->
+            <div id="lookupResult" class="hidden mt-6 flex flex-col gap-4 animate-[modalScale_0.2s_ease-out]">
+              <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <div class="font-bold text-slate-800" id="lrName">Customer Name</div>
+                    <div class="text-xs text-slate-500 font-semibold mt-0.5" id="lrPhone">9999999999</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-2xl font-extrabold text-[#1565C0]" id="lrPoints">0</div>
+                    <div class="text-[10px] uppercase font-bold text-[#1565C0]/60 tracking-wider">Points</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Points to Adjust (+/-)</label>
+                  <input type="number" id="manualPoints" class="block w-full rounded-lg border-slate-200 shadow-sm focus:border-[#1565C0] focus:ring focus:ring-[#1565C0] focus:ring-opacity-50 text-sm px-4 py-2.5 outline-none" placeholder="e.g. 50 or -20">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Reason</label>
+                  <input type="text" id="manualReason" class="block w-full rounded-lg border-slate-200 shadow-sm focus:border-[#1565C0] focus:ring focus:ring-[#1565C0] focus:ring-opacity-50 text-sm px-4 py-2.5 outline-none" placeholder="Bonus, correction, promo...">
+                </div>
+                <button class="w-full bg-[#1565C0] hover:bg-[#0D47A1] text-white px-4 py-3 rounded-lg text-sm font-bold shadow-sm transition-colors mt-2" onclick="submitManual()">Apply Adjustment</button>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+
+        <!-- Leaderboard Table Section -->
+        <section class="lg:col-span-2 bg-white rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.06)] overflow-hidden border border-slate-100">
+          <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><span class="text-2xl">🏅</span> Leaderboard</h3>
+              <p class="text-xs text-slate-500 mt-1 font-medium">Top performing customers based on points</p>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse min-w-[600px]">
+              <thead class="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider border-b border-slate-100">
+                <tr>
+                  <th class="px-6 py-4">Rank</th>
+                  <th class="px-6 py-4">Customer</th>
+                  <th class="px-6 py-4 text-center">Points</th>
+                  <th class="px-6 py-4 text-right">Total Spent</th>
+                  <th class="px-6 py-4 text-right">Member Since</th>
+                </tr>
+              </thead>
+              <tbody id="leaderBody" class="divide-y divide-slate-100">
+                <tr>
+                  <td colspan="5" class="px-6 py-12 text-center text-slate-500">
+                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#1565C0] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+                    <p class="mt-2 text-sm font-medium">Loading leaderboard...</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </div>
+  </main>
+
+  <style>
+    @keyframes modalScale { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+    const token = localStorage.getItem('bitekaro_token');
+    if (!token) window.location.href = 'login.html';
+    const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+    let lookupCustomerId = null;
+
+    async function loadLeaderboard() {
+      try {
+        const res = await fetch(API + '/loyalty/members', { headers });
+        const data = await res.json();
+        const members = data.members || [];
+        document.getElementById('sTotalMembers').textContent = members.length;
+        const totalPoints = members.reduce((s,c) => s + (c.loyalty_points || 0), 0);
+        document.getElementById('sIssued').textContent = totalPoints;
+        document.getElementById('sRedeemed').textContent = '—';
+
+        const tbody = document.getElementById('leaderBody');
+        if (members.length === 0) { 
+          tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-slate-500">No members yet</td></tr>'; 
+          return; 
+        }
+        tbody.innerHTML = members.map((c, i) => {
+          const rankColors = [
+            'bg-amber-100 text-amber-600', // Gold
+            'bg-slate-200 text-slate-600', // Silver
+            'bg-[#FCE4EC] text-[#880E4F]' // Bronze
+          ];
+          const isTop3 = i < 3;
+          const medals = ['🥇','🥈','🥉'];
+          
+          let rankHtml = '';
+          if (isTop3) {
+            rankHtml = `<span class="flex items-center justify-center p-2 rounded-xl text-2xl bg-slate-50">${medals[i]}</span>`;
+          } else {
+            rankHtml = `<span class="flex items-center justify-center font-bold text-slate-400 p-2 ml-2">${i+1}</span>`;
+          }
+          
+          const phone = c.phone ? 'XXXXXX' + c.phone.slice(-4) : 'N/A';
+          const since = c.created_at ? new Date(c.created_at).toLocaleDateString('en-US',{month:'short',year:'numeric'}) : 'N/A';
+          const initials = (c.name || 'U').substring(0,2).toUpperCase();
+          const avatarColor = rankColors[i] || 'bg-blue-50 text-[#1565C0]';
+
+          return `<tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-6 py-4">${rankHtml}</td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="h-10 w-10 rounded-full ${avatarColor} font-bold flex items-center justify-center text-xs shrink-0">${initials}</div>
+                <div class="min-w-0">
+                  <p class="font-bold text-slate-900 text-sm truncate">${c.name || 'Unnamed'}</p>
+                  <p class="text-xs text-slate-500 font-medium">${phone}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 text-center">
+              <span class="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-100 font-bold rounded-full text-sm inline-block min-w-[60px] shadow-sm">${c.loyalty_points || 0}</span>
+            </td>
+            <td class="px-6 py-4 text-sm font-bold text-slate-700 text-right">Rs.${parseFloat(c.total_spent || 0).toFixed(0)}</td>
+            <td class="px-6 py-4 text-sm text-slate-500 font-medium text-right">${since}</td>
+          </tr>`;
+        }).join('');
+      } catch(e) { console.error(e); }
+    }
+
+    async function lookupCustomer() {
+      const phone = document.getElementById('lookupPhone').value.trim();
+      if (!phone || phone.length < 10) { showToast('Enter a valid 10-digit phone number', 'error'); return; }
+      document.getElementById('lookupResult').classList.add('hidden');
+      document.getElementById('lookupEmpty').classList.add('hidden');
+      try {
+        const res = await fetch(API + '/loyalty/' + phone, { headers });
+        const data = await res.json();
+        if (data.exists) {
+          const c = data.customer;
+          lookupCustomerId = c.id;
+          document.getElementById('lrName').textContent = c.name || 'Unnamed Customer';
+          document.getElementById('lrPhone').textContent = c.phone;
+          document.getElementById('lrPoints').textContent = c.loyalty_points || 0;
+          document.getElementById('lookupResult').classList.remove('hidden');
+        } else {
+          document.getElementById('lookupEmpty').classList.remove('hidden');
+        }
+      } catch(e) { showToast('Lookup failed', 'error'); }
+    }
+
+    async function submitManual() {
+      if (!lookupCustomerId) return;
+      const points_change = parseInt(document.getElementById('manualPoints').value);
+      const description = document.getElementById('manualReason').value.trim();
+      if (!points_change || isNaN(points_change)) { showToast('Enter a valid point amount', 'error'); return; }
+      try {
+        await fetch(API + '/loyalty/' + lookupCustomerId + '/points', {
+          method: 'PATCH', headers,
+          body: JSON.stringify({ points_change, description: description || 'Manual adjustment' })
+        });
+        showToast('Points updated successfully!', 'success');
+        document.getElementById('manualPoints').value = '';
+        document.getElementById('manualReason').value = '';
+        lookupCustomer(); // Refresh the lookup card stats
+        loadLeaderboard();
+      } catch(e) { showToast('Update failed', 'error'); }
+    }
+
+    document.getElementById('lookupPhone').addEventListener('keypress', e => { if (e.key === 'Enter') lookupCustomer(); });
+
+    function showToast(msg, type = 'info') {
+      let c = document.querySelector('.toast-container');
+      if (!c) { c = document.createElement('div'); c.className = 'toast-container fixed bottom-4 right-4 z-50 flex flex-col gap-2'; document.body.appendChild(c); }
+      const t = document.createElement('div'); 
+      t.className = `px-4 py-3 rounded-lg shadow-lg font-medium text-white transition-opacity duration-300 ${type === 'error' ? 'bg-red-500' : 'bg-[#00897B]'}`; 
+      t.textContent = msg; 
+      c.appendChild(t);
+      setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    function toggleSidebar() { 
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebarOverlay').classList.toggle('hidden'); 
+    }
+    
+    function logout() { localStorage.removeItem('bitekaro_token'); localStorage.removeItem('bitekaro_user'); window.location.href = 'login.html'; }
+
+    loadLeaderboard();
+  </script>
+</body>
+</html>

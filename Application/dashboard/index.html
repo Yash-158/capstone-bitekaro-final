@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteKaro One — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: { "primary": "#1152d4", "background-light": "#f6f6f8", "background-dark": "#101622", "accent-coral": "#ff7e67", "accent-teal": "#2dd4bf", "accent-purple": "#a855f7" },
+          fontFamily: { "display": ["Poppins", "Manrope", "sans-serif"] },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    .sidebar-gradient { background: linear-gradient(180deg, #1152d4 0%, #60a5fa 100%); }
+    body { font-family: 'Poppins', sans-serif; min-height: max(884px, 100dvh); }
+    /* Legacy styles required for rendering dynamically generated stuff */
+    .metric-change.up { color: #10B981; } .metric-change.down { color: #EF4444; }
+    .status-badge { padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+    .status-completed, .status-paid { background: #D1FAE5; color: #047857; }
+    .status-preparing { background: #FEF3C7; color: #B45309; }
+    .status-received { background: #DBEAFE; color: #1D4ED8; }
+    .status-ready { background: #CCFBF1; color: #0F766E; }
+    .status-cancelled, .status-pending { background: #F1F5F9; color: #475569; }
+    .insight-item { padding: 16px; margin-bottom: 12px; background: white; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    .insight-icon { font-size: 20px; }
+  </style>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="bg-[#F0F4FF] font-display antialiased text-slate-800 flex h-screen overflow-hidden">
+  
+  <!-- Mobile Header & Hamburger -->
+  <div class="md:hidden flex items-center justify-between bg-white p-4 shadow-sm z-40 fixed top-0 w-full hover:shadow-md transition-shadow">
+    <div class="font-bold text-[#0D47A1] text-sm tracking-wider">BUSINESS DASHBOARD</div>
+    <button onclick="toggleSidebar()" class="p-2 bg-slate-100 rounded-lg text-slate-600">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-50 flex w-64 flex-col shrink-0 bg-gradient-to-b from-[#0D47A1] to-[#1565C0] text-white transition-transform duration-300 transform -translate-x-full md:translate-x-0 pt-[68px] md:pt-0">
+    <div class="p-6 flex flex-col items-center border-b border-white/10 hidden md:flex">
+      <div class="mb-2 flex items-center justify-center rounded-2xl bg-white shadow-lg p-2" style="height: 56px; width: 100%;">
+        <img src="/public/images/logo.png" alt="BiteKaro" onerror="this.style.display='none'" style="height:100%; object-fit:contain;">
+      </div>
+      <span class="text-[10px] font-bold uppercase tracking-[2px] text-white/80 mt-2">BUSINESS DASHBOARD</span>
+    </div>
+    
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto w-full">
+      <a class="flex items-center gap-3 px-4 py-3 text-white bg-white/20 rounded-lg transition-colors font-bold" href="index.html">
+        <span class="material-symbols-outlined text-[#90CAF9]">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="menu-manager.html">
+        <span class="material-symbols-outlined text-[#FFB300]">restaurant_menu</span>
+        <span class="font-medium">Menu Manager</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="orders.html">
+        <span class="material-symbols-outlined text-[#FF6B35]">shopping_cart</span>
+        <span class="font-medium">Live Orders</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="customers.html">
+        <span class="material-symbols-outlined text-[#4DB6AC]">group</span>
+        <span class="font-medium">Customers</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="loyalty-manager.html">
+        <span class="material-symbols-outlined text-[#CE93D8]">loyalty</span>
+        <span class="font-medium">Loyalty</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-white/10 w-full mt-auto">
+      <button class="flex items-center gap-3 w-full px-4 py-3 text-white/70 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors" onclick="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="font-medium">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#F0F4FF] h-screen overflow-y-auto overflow-x-hidden pt-[68px] md:pt-0">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between p-6 md:px-8 bg-white border-b border-slate-200 shrink-0">
+      <div>
+        <h2 class="text-2xl font-bold text-[#0D47A1]" id="greeting">Analytics Overview</h2>
+        <p class="text-sm text-slate-500 mt-1 hidden md:block" id="dateText"></p>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="text-sm font-semibold text-slate-600 hidden md:block">Welcome, <strong id="userName" class="text-slate-900">Admin</strong></span>
+        <button class="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 relative hover:bg-slate-200 transition-colors">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute top-2.5 right-2.5 size-2.5 bg-primary rounded-full border-2 border-white"></span>
+        </button>
+      </div>
+    </header>
+    
+    <div class="p-6 md:p-8 space-y-6 max-w-7xl mx-auto pb-10 w-full">
+      
+      <!-- Metric Cards Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] flex items-start justify-between border-t-[3px] border-[#1565C0] group transition-transform hover:-translate-y-1 duration-300">
+          <div>
+            <p class="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wider">Total Revenue</p>
+            <h3 class="text-2xl font-extrabold text-[#0D47A1] tracking-tight" id="mRevenue">Rs.0</h3>
+            <p class="text-xs font-bold mt-2 flex items-center gap-1 metric-change" id="mRevenueChange"></p>
+          </div>
+          <div class="w-12 h-12 flex items-center justify-center bg-blue-50 text-[#1565C0] rounded-xl group-hover:scale-110 transition-transform">
+             <span class="material-symbols-outlined text-2xl">payments</span>
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] flex items-start justify-between border-t-[3px] border-[#FF6B35] group transition-transform hover:-translate-y-1 duration-300">
+          <div>
+            <p class="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wider">Orders Today</p>
+            <h3 class="text-2xl font-extrabold text-[#0D47A1] tracking-tight" id="mOrders">0</h3>
+            <p class="text-xs font-bold mt-2 flex items-center gap-1 metric-change" id="mOrdersChange"></p>
+          </div>
+          <div class="w-12 h-12 flex items-center justify-center bg-orange-50 text-[#FF6B35] rounded-xl group-hover:scale-110 transition-transform">
+             <span class="material-symbols-outlined text-2xl">shopping_bag</span>
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] flex items-start justify-between border-t-[3px] border-[#00897B] group transition-transform hover:-translate-y-1 duration-300">
+          <div>
+            <p class="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wider">Avg Order Value</p>
+            <h3 class="text-2xl font-extrabold text-[#0D47A1] tracking-tight" id="mAvg">Rs.0</h3>
+            <p class="text-slate-400 text-[10px] font-bold mt-2 tracking-wider uppercase">per order</p>
+          </div>
+          <div class="w-12 h-12 flex items-center justify-center bg-teal-50 text-[#00897B] rounded-xl group-hover:scale-110 transition-transform">
+             <span class="material-symbols-outlined text-2xl">receipt</span>
+          </div>
+        </div>
+        
+        <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] flex items-start justify-between border-t-[3px] border-[#7E57C2] group transition-transform hover:-translate-y-1 duration-300">
+          <div>
+            <p class="text-slate-500 text-xs font-bold mb-1 uppercase tracking-wider">Loyalty Members</p>
+            <h3 class="text-2xl font-extrabold text-[#0D47A1] tracking-tight" id="mCustomers">0</h3>
+            <p class="text-slate-400 text-[10px] font-bold mt-2 tracking-wider uppercase">total registered</p>
+          </div>
+          <div class="w-12 h-12 flex items-center justify-center bg-purple-50 text-[#7E57C2] rounded-xl group-hover:scale-110 transition-transform">
+             <span class="material-symbols-outlined text-2xl">stars</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Charts & Insights Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        
+        <!-- Revenue Chart Area -->
+        <div class="xl:col-span-2 space-y-8">
+          <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] overflow-hidden border-t border-slate-50">
+            <div class="flex items-center justify-between mb-8">
+              <h4 class="font-bold text-[#0D47A1] text-xl tracking-tight">Revenue Trend</h4>
+              <div class="flex bg-slate-100 rounded-lg p-1 filter-btns">
+                <button class="px-4 py-1.5 text-xs font-bold rounded-md bg-white text-slate-800 shadow-sm transition-all filter-btn active" onclick="loadHourly(this)">Today</button>
+                <button class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all filter-btn" onclick="loadHourly(this,'week')">Week</button>
+                <button class="px-4 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all filter-btn" onclick="loadHourly(this,'month')">Month</button>
+              </div>
+            </div>
+            <div class="h-72 w-full relative">
+               <canvas id="revenueChart" class="absolute inset-0"></canvas>
+            </div>
+          </div>
+          
+          <!-- Two Col Charts -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] overflow-hidden border-t border-slate-50">
+              <h4 class="font-bold text-[#0D47A1] text-xl tracking-tight mb-6">Top Selling Items</h4>
+              <div class="h-60 w-full relative">
+                 <canvas id="topItemsChart" class="absolute inset-0"></canvas>
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] overflow-hidden border-t border-slate-50">
+              <h4 class="font-bold text-[#0D47A1] text-xl tracking-tight mb-6">Revenue by Category</h4>
+              <div class="h-60 w-full relative">
+                 <canvas id="categoryChart" class="absolute inset-0"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- AI Insights Sidebar Panel -->
+        <div class="space-y-6">
+          <div class="bg-white p-6 rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] overflow-hidden border-t border-slate-50 h-full flex flex-col">
+            <div class="flex items-center gap-3 mb-6 bg-amber-50 rounded-xl p-4 border border-amber-100">
+              <span class="material-symbols-outlined text-amber-500 text-3xl">auto_awesome</span>
+              <div>
+                 <h4 class="font-bold text-[#0D47A1] text-xl tracking-tight">AI Insights</h4>
+                 <p class="text-xs text-slate-500 font-bold tracking-wide mt-0.5">DYNAMIC RECOMMENDATIONS</p>
+              </div>
+            </div>
+            <div class="flex-1 overflow-y-auto pr-2 custom-scroll" id="insightsBody">
+               <div class="flex flex-col items-center justify-center h-40">
+                  <div class="spinner border-[#1565C0] w-8 h-8"></div>
+                  <p class="text-sm text-[#1565C0] font-semibold mt-4 tracking-wide">Synthesizing data...</p>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Recent Orders Table -->
+      <div class="bg-white rounded-[16px] shadow-[0_4px_24px_rgba(21,101,192,0.10)] overflow-hidden border-t border-slate-50 mt-8">
+        <div class="p-6 border-b border-blue-100 flex items-center justify-between bg-slate-50/50">
+          <h4 class="font-bold text-[#0D47A1] text-xl tracking-tight">Recent Live Orders</h4>
+          <a class="text-[#1565C0] text-sm font-bold flex items-center gap-1 hover:underline" href="orders.html">Manage All <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse min-w-[650px]">
+            <thead>
+              <tr class="bg-blue-50 border-b border-blue-100">
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1]">Token</th>
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1]">Items</th>
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1]">Total</th>
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1]">Payment</th>
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1]">Status</th>
+                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#0D47A1] text-right">Time</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100" id="recentOrdersBody">
+              <tr><td colspan="6" class="text-center py-12"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#1565C0] mx-auto"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+    const token = localStorage.getItem('bitekaro_token');
+    if (!token) window.location.href = 'login.html';
+    const user = JSON.parse(localStorage.getItem('bitekaro_user') || '{}');
+    const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+    document.getElementById('userName').textContent = user.name || 'Admin';
+
+    // Greeting
+    const h = new Date().getHours();
+    const greet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+    document.getElementById('greeting').textContent = `${greet}, ${user.name || 'Admin'}! 👋`;
+    document.getElementById('dateText').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) + " — Here's how your cafe is doing today";
+
+    let revenueChart, topChart, catChart;
+
+    // ── Fetch Summary ──
+    async function loadSummary() {
+      try {
+        const res = await fetch(API + '/analytics/summary', { headers });
+        const d = await res.json();
+        animateValue('mRevenue', 0, d.today_revenue, 'Rs.');
+        animateValue('mOrders', 0, d.today_orders);
+        animateValue('mAvg', 0, d.avg_order_value, 'Rs.');
+        animateValue('mCustomers', 0, d.total_customers);
+
+        const rc = document.getElementById('mRevenueChange');
+        const oc = document.getElementById('mOrdersChange');
+        rc.className = 'metric-change ' + (d.revenue_change_pct >= 0 ? 'up' : 'down');
+        rc.innerHTML = `${d.revenue_change_pct >= 0 ? '↑' : '↓'} ${Math.abs(d.revenue_change_pct || 0)}% vs yesterday`;
+        oc.className = 'metric-change ' + (d.orders_change_pct >= 0 ? 'up' : 'down');
+        oc.innerHTML = `${d.orders_change_pct >= 0 ? '↑' : '↓'} ${Math.abs(d.orders_change_pct || 0)}% vs yesterday`;
+
+        return d;
+      } catch(e) { console.error('Summary error:', e); return {}; }
+    }
+
+    function animateValue(id, start, end, prefix = '') {
+      const el = document.getElementById(id);
+      const duration = 800;
+      const startTime = performance.now();
+      end = parseFloat(end) || 0;
+      function update(t) {
+        const p = Math.min((t - startTime) / duration, 1);
+        const v = Math.floor(start + (end - start) * p);
+        el.textContent = prefix + v;
+        if (p < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+
+    // ── Insights ──
+    async function loadInsights(summary) {
+      const body = document.getElementById('insightsBody');
+      try {
+        const res = await fetch(API + '/analytics/insights', { headers });
+        const data = await res.json();
+        const insights = data.insights || [];
+        body.innerHTML = insights.map(i => {
+          let leftBorderClass = 'border-[#1565C0]'; // default primary
+          let icon = '💡';
+          let text = i;
+          let iconColorClass = 'text-[#1565C0]';
+          
+          if (text.includes('✅')) { 
+            leftBorderClass = 'border-[#00897B]'; 
+            iconColorClass = 'text-[#00897B]';
+            icon = '✅'; 
+            text = text.replace('✅', '').trim(); 
+          } else if (text.includes('⚠️')) { 
+            leftBorderClass = 'border-[#FFB300]'; 
+            iconColorClass = 'text-[#FFB300]';
+            icon = '⚠️'; 
+            text = text.replace('⚠️', '').trim(); 
+          } else if (text.includes('💡')) { 
+            icon = '💡'; 
+            text = text.replace('💡', '').trim(); 
+          }
+          
+          return `
+            <div class="p-4 mb-3 bg-white rounded-xl flex items-start gap-3 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-l-4 ${leftBorderClass}">
+              <span class="text-xl ${iconColorClass}">${icon}</span>
+              <span class="text-sm font-medium text-slate-700 leading-relaxed">${text}</span>
+            </div>
+          `;
+        }).join('') + '<div class="text-[11px] text-slate-400 mt-3 text-right font-semibold tracking-wide">Powered by Groq AI ⚡</div>';
+      } catch(e) {
+        body.innerHTML = '<p class="text-slate-400 p-3 text-sm font-medium text-center">Insights unavailable — add GROQ_API_KEY to .env</p>';
+      }
+    }
+
+    // ── Revenue Chart ──
+    async function loadHourly(btn, range) {
+      if (btn) { document.querySelectorAll('.filter-btns .filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+      try {
+        const res = await fetch(API + '/analytics/hourly', { headers });
+        const data = await res.json();
+        const labels = data.map(d => d.hour + ':00');
+        const values = data.map(d => d.revenue);
+
+        if (revenueChart) revenueChart.destroy();
+        revenueChart = new Chart(document.getElementById('revenueChart'), {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Revenue (Rs.)', data: values,
+              borderColor: '#1565C0', backgroundColor: 'rgba(21,101,192,0.08)',
+              fill: true, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#1565C0'
+            }]
+          },
+          options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+      } catch(e) { console.error('Chart error:', e); }
+    }
+
+    // ── Top Items ──
+    async function loadTopItems() {
+      try {
+        const res = await fetch(API + '/analytics/top-items?range=today', { headers });
+        const data = await res.json();
+        if (topChart) topChart.destroy();
+        topChart = new Chart(document.getElementById('topItemsChart'), {
+          type: 'bar',
+          data: {
+            labels: data.map(d => d.item_name),
+            datasets: [{ 
+              label: 'Orders', 
+              data: data.map(d => d.count), 
+              backgroundColor: data.map(d => {
+                const colors = { hot_beverages: '#FF6B35', cold_beverages: '#0288D1', snacks: '#FFB300', meals: '#2E7D32', desserts: '#7E57C2' };
+                return colors[d.category] || '#42A5F5';
+              }), 
+              borderRadius: 8 
+            }]
+          },
+          options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+        });
+      } catch(e) {}
+    }
+
+    // ── Category Revenue ──
+    async function loadCategoryRevenue() {
+      try {
+        const res = await fetch(API + '/analytics/category-revenue?range=today', { headers });
+        const data = await res.json();
+        const catMap = { hot_beverages: '#FF6B35', cold_beverages: '#0288D1', snacks: '#FFB300', meals: '#2E7D32', desserts: '#7E57C2' };
+        if (catChart) catChart.destroy();
+        catChart = new Chart(document.getElementById('categoryChart'), {
+          type: 'doughnut',
+          data: {
+            labels: data.map(d => d.category),
+            datasets: [{ data: data.map(d => d.revenue), backgroundColor: data.map(d => catMap[d.category] || '#42A5F5'), borderWidth: 0 }]
+          },
+          options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+      } catch(e) {}
+    }
+
+    // ── Recent Orders ──
+    async function loadRecentOrders() {
+      try {
+        const res = await fetch(API + '/analytics/recent-orders', { headers });
+        const orders = await res.json();
+        const tbody = document.getElementById('recentOrdersBody');
+        if (orders.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-light);">No orders yet today</td></tr>'; return; }
+        tbody.innerHTML = orders.map(o => {
+          const items = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+          const itemStr = (items || []).map(i => `${i.item_name} x${i.quantity}`).join(', ');
+          const time = new Date(o.created_at).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit',hour12:true});
+          return `<tr class="hover:bg-blue-50/30 transition-colors border-b border-slate-100 last:border-0">
+            <td class="px-6 py-4 font-bold text-slate-800">#${o.token_number}</td>
+            <td class="px-6 py-4 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap" title="${itemStr}">${itemStr}</td>
+            <td class="px-6 py-4 font-bold text-slate-800">Rs.${Number(o.total).toFixed(0)}</td>
+            <td class="px-6 py-4"><span class="px-2 py-1 bg-green-100 text-green-800 rounded-md text-xs font-bold uppercase tracking-wider">${o.payment_method || 'cash'}</span></td>
+            <td class="px-6 py-4"><span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm border border-slate-200">${o.status}</span></td>
+            <td class="px-6 py-4 text-right text-sm text-slate-500 font-medium">${time}</td>
+          </tr>`;
+        }).join('');
+      } catch(e) { console.error('Orders error:', e); }
+    }
+
+    // ── Init ──
+    (async () => {
+      const summary = await loadSummary();
+      loadInsights(summary);
+      loadHourly();
+      loadTopItems();
+      loadCategoryRevenue();
+      loadRecentOrders();
+      setInterval(loadRecentOrders, 30000);
+    })();
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('show');
+    }
+    function logout() {
+      localStorage.removeItem('bitekaro_token');
+      localStorage.removeItem('bitekaro_user');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

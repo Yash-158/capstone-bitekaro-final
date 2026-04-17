@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteKaro — Order Confirmed!</title>
+  <meta name="description" content="Your BiteKaro order has been placed! Check your token number and estimated wait time.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="css/kiosk.css">
+</head>
+<style>
+  .confetti-bg {
+    background-image: 
+        radial-gradient(circle at 10% 20%, #13ecec 4px, transparent 0),
+        radial-gradient(circle at 90% 10%, #ff7f50 5px, transparent 0),
+        radial-gradient(circle at 50% 15%, #ffbf00 3px, transparent 0),
+        radial-gradient(circle at 20% 80%, #8a2be2 6px, transparent 0),
+        radial-gradient(circle at 80% 85%, #13ecec 4px, transparent 0),
+        radial-gradient(circle at 40% 90%, #ff7f50 5px, transparent 0);
+    background-size: 400px 400px;
+  }
+</style>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen overflow-x-hidden">
+  
+  <div id="confettiContainer" class="absolute inset-0 pointer-events-none z-50 overflow-hidden"></div>
+  
+  <div class="confirmation-wrapper" id="successState">
+    <div class="confirmation-card">
+      <div class="confirmation-checkmark">✓</div>
+      <h1 class="confirmation-title">Order Placed!</h1>
+      <p class="confirmation-subtitle">Thank you for choosing BiteKaro</p>
+      
+      <div class="token-badge-container">
+        <p class="token-label">Your Token</p>
+        <div class="token-badge" id="tokenNumber">#0</div>
+      </div>
+
+      <div class="wait-time-pill">
+        <span class="material-icons" style="font-size: 16px; margin-right: 4px;">schedule</span>
+        <span>Ready in ~<span id="waitTime">8</span> mins</span>
+      </div>
+
+      <div class="progress-steps">
+        <div class="step completed">
+          <div class="step-circle">✓</div>
+          <span class="step-label">Order Placed</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step pending">
+          <div class="step-circle">2</div>
+          <span class="step-label">Being Prepared</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step pending">
+          <div class="step-circle">3</div>
+          <span class="step-label">Ready for Pickup</span>
+        </div>
+      </div>
+
+      <div class="confirmation-summary">
+        <h3>Order Summary</h3>
+        <div id="orderItemsList"></div>
+        
+        <div class="summary-row">
+          <span>Payment</span>
+          <span id="paymentInfo"></span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span id="orderTotal">₹0</span>
+        </div>
+      </div>
+
+      <div id="pointsCard" class="hidden loyalty-update-card">
+        <span class="material-icons" style="color: #4CAF50; font-size: 24px;">workspace_premium</span>
+        <div>
+          <p class="points-earned" id="pointsMsg"></p>
+          <p>Loyalty update</p>
+        </div>
+      </div>
+
+      <div class="pickup-instructions">
+        Pick up your order when <strong>Your token number is called</strong>
+      </div>
+
+      <button class="place-new-order-btn" onclick="newOrder()">
+        <span class="material-icons">add_shopping_cart</span>
+        Place New Order
+      </button>
+      <div class="countdown-text">
+        <span class="material-icons" style="font-size: 14px; vertical-align: middle;">refresh</span>
+        <span id="countdown">Returning to home...</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Failure State -->
+  <div class="relative min-h-screen w-full flex flex-col items-center justify-center px-6 py-12 hidden bg-background-light dark:bg-background-dark" id="failState">
+    <div class="max-w-4xl w-full bg-white dark:bg-slate-900/50 rounded-xl shadow-2xl p-12 text-center border border-red-500/10">
+      <div class="flex flex-col items-center justify-center space-y-8 py-10">
+        <div class="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-50 dark:bg-red-950/30 mb-4">
+          <span class="material-icons text-red-600 !text-7xl font-light">close</span>
+          <div class="absolute inset-0 rounded-full border-4 border-red-600/20"></div>
+        </div>
+        <div class="space-y-4 max-w-2xl mx-auto">
+          <h1 class="text-5xl font-black text-red-600 leading-tight tracking-tight">Payment Failed</h1>
+          <p class="text-xl text-slate-600 dark:text-slate-400 font-light leading-relaxed" id="failMsg">We couldn't process your transaction. Please try again.</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-4 w-full max-w-lg mt-8">
+          <button class="flex-1 h-16 rounded-xl bg-gradient-to-r from-[#1565C0] to-blue-500 text-white text-lg font-bold shadow-lg hover:scale-[1.02] transition-transform flex items-center justify-center gap-2" onclick="window.location.href='payment.html'">
+            <span class="material-icons">refresh</span> Try Again
+          </button>
+          <button class="flex-1 h-16 rounded-xl border-2 border-[#00897B] text-[#00897B] bg-transparent text-lg font-bold hover:bg-[#00897B]/5 transition-colors flex items-center justify-center gap-2" onclick="payCash()">
+            <span class="material-icons">storefront</span> Pay at Counter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    let countdownTimer;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const orderStr = sessionStorage.getItem('bk_placed_order');
+      if (!orderStr) { window.location.href = 'index.html'; return; }
+
+      const order = JSON.parse(orderStr);
+
+      if (order.error) {
+        document.getElementById('successState').classList.add('hidden');
+        document.getElementById('failState').classList.remove('hidden');
+        document.getElementById('failMsg').textContent = order.message || 'Something went wrong.';
+        return;
+      }
+
+      document.getElementById('tokenNumber').textContent = '#' + (order.token_number || 0);
+      document.getElementById('waitTime').textContent = order.estimated_wait || 8;
+
+      const items = typeof order.items === 'string' ? JSON.parse(order.items) : order.items;
+      document.getElementById('orderItemsList').innerHTML = (items || []).map(i =>
+        `<div class="summary-row">
+          <span>${i.quantity}x ${i.item_name}</span>
+          <span>${BiteKaroApp.formatPrice(i.item_total)}</span>
+        </div>`
+      ).join('');
+
+      const pm = order.payment_method || 'cash';
+      const ps = order.payment_status || 'pending';
+      document.getElementById('paymentInfo').textContent =
+        `${pm === 'razorpay' ? 'Online' : 'Cash'} (${ps === 'paid' ? 'Paid ✓' : 'Pay via counter'})`;
+      document.getElementById('orderTotal').textContent = BiteKaroApp.formatPrice(order.total);
+
+      const pointsEarned = Math.floor(parseFloat(order.total) / 10);
+      if (pointsEarned > 0 && BiteKaroApp.customer) {
+        document.getElementById('pointsCard').classList.remove('hidden');
+        document.getElementById('pointsMsg').textContent = `+${pointsEarned} Points`;
+      }
+
+      createConfetti();
+
+      let seconds = 60;
+      const el = document.getElementById('countdown');
+      countdownTimer = setInterval(() => {
+        seconds--;
+        el.textContent = `Redirecting to menu in ${seconds}s`;
+        if (seconds <= 0) { clearInterval(countdownTimer); newOrder(); }
+      }, 1000);
+    });
+
+    function newOrder() {
+      if (countdownTimer) clearInterval(countdownTimer);
+      sessionStorage.removeItem('bk_cart');
+      sessionStorage.removeItem('bk_pending_order');
+      sessionStorage.removeItem('bk_placed_order');
+      sessionStorage.removeItem('bk_mood');
+      sessionStorage.removeItem('bk_order_history');
+      window.location.href = 'index.html';
+    }
+
+    function payCash() {
+      const pending = sessionStorage.getItem('bk_pending_order');
+      if (pending) {
+        window.location.href = 'payment.html';
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function createConfetti() {
+      const container = document.getElementById('confettiContainer');
+      const colors = ['#FF6B35', '#FFB300', '#00897B', '#1565C0', '#7E57C2'];
+      // Keep original CSS confetti logic, adapting it temporarily for absolute elements if needed,
+      // but the original logic relied on a global .confetti style. We will add those inline.
+      for (let i = 0; i < 50; i++) {
+        const dot = document.createElement('div');
+        dot.style.position = 'absolute';
+        dot.style.borderRadius = '50%';
+        dot.style.top = '-10px';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.width = (Math.random() * 8 + 6) + 'px';
+        dot.style.height = dot.style.width;
+        dot.style.animation = `fall ${Math.random() * 2 + 2}s linear ${Math.random() * 2}s infinite`;
+        container.appendChild(dot);
+      }
+    }
+  </script>
+  <style>
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</body>
+</html>

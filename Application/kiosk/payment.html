@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BiteKaro — Payment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/kiosk.css">
+  <script src="js/app.js" defer></script>
+  <script src="js/payment.js" defer></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body style="background: linear-gradient(160deg, #F0F7FF 0%, #FFFBF5 50%, #F0FFF8 100%); min-height: 100vh;">
+
+<header class="kiosk-header">
+  <button class="back-btn" onclick="window.location.href='cart.html'">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  </button>
+  <h1 class="page-title">Payment</h1>
+</header>
+
+<main class="payment-wrapper">
+
+  <div id="paymentProcessing" class="hidden" style="text-align: center; padding: 60px 20px;">
+    <h2>Processing Payment...</h2>
+    <p>Please wait, do not close this page.</p>
+  </div>
+  
+  <div id="paymentOptions">
+      <!-- Order Summary -->
+      <div class="payment-summary-card">
+        <div class="payment-summary-top">
+          <div class="payment-summary-left">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <span class="summary-label">Order Total</span>
+          </div>
+          <div id="paymentTotal" class="payment-total">Rs.0</div>
+        </div>
+        <div class="payment-item-count" id="orderSummaryLabel">0 items</div>
+        <button class="view-details-btn" onclick="toggleOrderDetails()">
+          View Itemized Details
+          <svg id="expandArrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="orderDetails" class="itemized-details hidden">
+          <!-- JS renders items here -->
+        </div>
+      </div>
+
+      <h2 class="payment-section-title">Select Payment Method</h2>
+
+      <!-- Razorpay Card -->
+      <div class="payment-card recommended-card" id="razorpayCard" onclick="selectPayment('razorpay')">
+        <div class="payment-card-header">
+          <span class="payment-card-title">Online Payment</span>
+          <span class="recommended-chip">RECOMMENDED</span>
+        </div>
+        <div class="payment-card-desc">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2"><path d="M1 4h22v4H1zM1 12h22v4H1z"/><circle cx="5" cy="20" r="1"/><circle cx="12" cy="20" r="1"/></svg>
+          <span id="razorpay-desc">Pay <span id="razorpayAmount">Rs.0</span> securely via Razorpay</span>
+        </div>
+        <div class="payment-method-chips">
+          <span class="method-chip">UPI</span>
+          <span class="method-chip">CARD</span>
+          <span class="method-chip">NETBANKING</span>
+        </div>
+        <button id="razorpayBtn" class="pay-now-btn" onclick="handleRazorpayPayment()" style="display:none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Pay Now
+        </button>
+      </div>
+
+      <!-- Cash Card -->
+      <div class="payment-card cash-card" id="cashCard" onclick="selectPayment('cash')">
+        <div class="payment-card-header">
+          <span style="font-size:24px">💵</span>
+          <span class="payment-card-title">Pay at Counter</span>
+        </div>
+        <p class="payment-card-desc-text">
+          Place your order and pay with cash/UPI at the billing desk
+        </p>
+        <button id="cashBtn" class="pay-counter-btn" onclick="handleCashPayment()" style="display:none;">
+          Place Order
+        </button>
+      </div>
+
+      <!-- Coming Soon Card -->
+      <div class="payment-card disabled-payment-card">
+        <div class="payment-card-header">
+          <span style="font-size:24px">🎁</span>
+          <span class="payment-card-title" style="color:#90A4AE">Cafe Loyalty Points</span>
+          <span class="coming-soon-chip">Coming Soon</span>
+        </div>
+        <p class="payment-card-desc-text" style="color:#B0BEC5">
+          Redeem points for your order
+        </p>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges-row">
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          <span>Secure Payment</span>
+        </div>
+        <div class="trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F57F17" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Instant Confirmation</span>
+        </div>
+      </div>
+  </div>
+
+</main>
+</body>
+</html>

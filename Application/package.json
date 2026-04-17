@@ -1,0 +1,40 @@
+{
+  "name": "bitekaro",
+  "version": "1.0.0",
+  "description": "BiteKaro - AI-powered smart cafe ordering kiosk system",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "seed": "node server/db/seed.js",
+    "seed:history": "node server/db/seed-history.js"
+  },
+  "keywords": [
+    "cafe",
+    "kiosk",
+    "ordering",
+    "ai",
+    "bitekaro"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.6.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.20.0",
+    "pg-hstore": "^2.3.4",
+    "razorpay": "^2.9.6",
+    "socket.io": "^4.8.3",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

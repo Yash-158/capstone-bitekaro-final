@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Failure Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#ee5f2b",
+              "background-light": "#f8f6f6",
+              "background-dark": "#221510",
+              "error-red": "#dc2626",
+              "teal-accent": "#0d9488",
+            },
+            fontFamily: {
+              "display": ["Poppins", "Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="flex-grow flex flex-col items-center justify-center px-6 py-12">
+<div class="max-w-4xl w-full bg-white dark:bg-slate-900/50 rounded-xl shadow-2xl p-12 text-center border border-primary/10">
+<header class="flex items-center justify-between mb-16 border-b border-primary/10 pb-6">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 uppercase tracking-widest">Premium Indian Cafe</h2>
+</div>
+<div class="text-sm font-medium text-slate-500 uppercase tracking-widest">Kiosk ID: #K-402</div>
+</header>
+<div class="flex flex-col items-center justify-center space-y-8 py-10">
+<div class="relative flex items-center justify-center w-32 h-32 rounded-full bg-red-50 dark:bg-red-950/30 mb-4">
+<span class="material-symbols-outlined text-error-red !text-7xl font-light">
+                        close
+                    </span>
+<div class="absolute inset-0 rounded-full border-4 border-error-red/20"></div>
+</div>
+<div class="space-y-4 max-w-2xl mx-auto">
+<h1 class="text-5xl font-black text-error-red leading-tight tracking-tight">
+                        Payment Failed
+                    </h1>
+<p class="text-xl text-slate-600 dark:text-slate-400 font-light leading-relaxed">
+                        We couldn't process your transaction. This might be due to insufficient funds, an expired card, or a temporary network issue with your bank.
+                    </p>
+</div>
+<div class="bg-background-light dark:bg-slate-800 p-6 rounded-lg w-full max-w-md border border-slate-200 dark:border-slate-700 my-4 text-left">
+<div class="flex justify-between items-center mb-2">
+<span class="text-slate-500 text-sm font-medium">Order Reference</span>
+<span class="text-slate-900 dark:text-slate-100 font-bold">#PIC-8829-X</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-500 text-sm font-medium">Amount Due</span>
+<span class="text-slate-900 dark:text-slate-100 font-bold">₹1,450.00</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full max-w-lg mt-8">
+<button class="flex-1 h-16 rounded-xl bg-gradient-to-r from-primary to-[#ff7e50] text-white text-lg font-bold shadow-lg shadow-primary/30 hover:scale-[1.02] transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                        Try Again
+                    </button>
+<button class="flex-1 h-16 rounded-xl border-2 border-teal-accent text-teal-accent bg-transparent text-lg font-bold hover:bg-teal-accent/5 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">storefront</span>
+                        Pay at Counter
+                    </button>
+</div>
+</div>
+<div class="mt-20 @container">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 rounded-lg bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-2">contact_support</span>
+<h4 class="font-bold text-sm">Need Help?</h4>
+<p class="text-xs text-slate-500">Ask any team member</p>
+</div>
+<div class="p-6 rounded-lg bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-2">lock</span>
+<h4 class="font-bold text-sm">Secure Payment</h4>
+<p class="text-xs text-slate-500">256-bit encrypted</p>
+</div>
+<div class="p-6 rounded-lg bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-2">wifi_off</span>
+<h4 class="font-bold text-sm">Network Status</h4>
+<p class="text-xs text-slate-500">Checking connection...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="w-full py-8 text-center text-slate-500 border-t border-primary/10">
+<div class="flex justify-center gap-8 mb-4">
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Support</a>
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors text-sm font-medium" href="#">Terms of Service</a>
+</div>
+<p class="text-xs uppercase tracking-widest font-semibold opacity-50">© 2024 Premium Indian Cafe. Global Kiosk Systems.</p>
+</footer>
+</body></html>

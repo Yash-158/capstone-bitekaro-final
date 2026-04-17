@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Premium Cafe Menu Browsing Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "accent-gold": "#d4af37",
+                        "accent-coral": "#ff6b6b",
+                        "accent-teal": "#20b2aa",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "poppins": ["Poppins", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .shimmer-gold {
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .food-gradient {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 glass-nav border-b border-slate-200/50 px-4 pt-4 pb-2">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">restaurant_menu</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-900">Royal Brews</h1>
+</div>
+<button class="relative p-2 bg-slate-100 rounded-full text-slate-700">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-0 right-0 h-4 w-4 bg-accent-coral text-[10px] text-white rounded-full flex items-center justify-center font-bold">3</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative mb-2">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-100/80 border-none rounded-xl py-3 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-400" placeholder="Search delicious food..." type="text"/>
+</div>
+<!-- Horizontal Categories -->
+<div class="flex overflow-x-auto no-scrollbar gap-6 py-2">
+<a class="flex flex-col items-center min-w-max border-b-2 border-primary pb-1" href="#">
+<span class="text-sm font-bold text-primary">All</span>
+</a>
+<a class="flex flex-col items-center min-w-max border-b-2 border-transparent pb-1 text-slate-500" href="#">
+<span class="text-sm font-medium">Hot Drinks</span>
+</a>
+<a class="flex flex-col items-center min-w-max border-b-2 border-transparent pb-1 text-slate-500" href="#">
+<span class="text-sm font-medium">Cold Drinks</span>
+</a>
+<a class="flex flex-col items-center min-w-max border-b-2 border-transparent pb-1 text-slate-500" href="#">
+<span class="text-sm font-medium">Snacks</span>
+</a>
+<a class="flex flex-col items-center min-w-max border-b-2 border-transparent pb-1 text-slate-500" href="#">
+<span class="text-sm font-medium">Meals</span>
+</a>
+<a class="flex flex-col items-center min-w-max border-b-2 border-transparent pb-1 text-slate-500" href="#">
+<span class="text-sm font-medium">Desserts</span>
+</a>
+</div>
+</header>
+<main class="pb-24">
+<!-- AI Recommendations Section -->
+<section class="mt-6 px-4">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-accent-gold">auto_awesome</span>
+<h2 class="text-lg font-bold">AI Recommendations</h2>
+</div>
+<div class="flex overflow-x-auto gap-4 no-scrollbar pb-2">
+<!-- Rec Card 1 -->
+<div class="min-w-[280px] h-40 rounded-xl relative overflow-hidden shimmer-gold">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Close up of a creamy latte with heart latte art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXKx1O07zt0edXIE0uyDSbhJoW6OEimKqzrhyMf0Tqa-47Yyr2csQFXT_fMNnXjOiyMi2TisuM4wpNAIUM34SaTJCBhMhQM-AdC3yPx7KClsOqwskdmP_IZscIeNjHcE8yxurJ0Iq2CdW0SirH4Pc9desSb5XhZ3rry5-vr94qLXYD3TDycRwpPTrX_DYZT7A8OfDdExoYW19PKLTgGXhyIYHJCOOPDJX1kelRCJJLDrkMk4sdiXPX_D6y84IoSNQtlnQgyFWLRcg"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex flex-col justify-center px-4">
+<span class="text-[10px] uppercase font-bold text-accent-gold tracking-widest mb-1">Top Pick for You</span>
+<h3 class="text-white font-bold text-lg">Hazelnut Macchiato</h3>
+<p class="text-white/80 text-xs mt-1">Perfect with your usual croissant</p>
+</div>
+</div>
+<!-- Rec Card 2 -->
+<div class="min-w-[280px] h-40 rounded-xl relative overflow-hidden shimmer-gold">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Sizzling paneer tikka pizza with melting cheese" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXwedg8lvMeKMWk5ZF6FC3PLhdwdul3FiBIdYFezJQi4S9vlTo0wDEpDwabeAk-DabGL1sD342Ri506iWAvwpP5RZr8KS4WcbEOCD1TdwTs7F23wHUHkPp6UihM4lPF998ifwtAFu7bRdpToCGF19Wl3Y_kkVazjYWHU96sV74Hldeqdo5RqPxLdTM3z40ET8xx0zl-9A0knmrbc8RhsDIFZ2pH23cF7jvGiMYGXpbbtGw9mn7sIDsPaNWCbuiucPZEkCcILpkUWs"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex flex-col justify-center px-4">
+<span class="text-[10px] uppercase font-bold text-accent-gold tracking-widest mb-1">Lunch Favorite</span>
+<h3 class="text-white font-bold text-lg">Paneer Tikka Pizza</h3>
+<p class="text-white/80 text-xs mt-1">Spicy &amp; cheesy delights</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Menu Grid -->
+<section class="mt-8 px-4">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold">Freshly Brewed &amp; Cooked</h2>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Food Card 1 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A slice of premium strawberry cheesecake" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzI9kj8iCDZYAwBqk7jnJfWb3aufTFiIzwobSr-Egr8GDWUkQzlfN8WuV6aE0_Q-yObtaSGKCAQGFEwnvKlg23lyAcxgQlL_Joi2MJ2AHFcsBBc3-o004I8-GVFnM2N9wKjIuXBADGodoKeHQcjSjPlY5u_GCCFsgo_bi0X3NJYgcuOgrvX741E7jBsIh0e2YVT1n9fTohTtAhabDuZEsVa5R7OAmcer4JazBXEfy8-Gri5jJHmAGsP7buzwWf3riWc1dJW1qf28I"/>
+<div class="absolute inset-0 food-gradient"></div>
+<div class="absolute top-2 left-2 flex flex-wrap gap-1">
+<span class="bg-accent-teal/90 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Healthy</span>
+</div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Berry Bliss Cake</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹349</p>
+</div>
+</div>
+<!-- Food Card 2 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Gourmet double decker chicken burger" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvwDglRMuCepa-sMR910Q25_Diq_l1rOnoa8aahIArvfSq9Qf7kNCylDZ1dqrN35VvChInLi5SspPLxsUPSP71ZoQ-TwUkp_oAiKFLez3IarX5HlTiYst8gf6pNa48x7I0_gHeojt9g1TcubLkGqOR7CeBSek7e4nkY4gmR7cGbaY83wFwDPyG6nvj1FfKoUvIcra5ivORULeCogSjgY2InsFww_rXqZBggwSy17JCZXF15knzRFhaISQYW6T4e2lAGuW-fPjQuR8"/>
+<div class="absolute inset-0 food-gradient"></div>
+<div class="absolute top-2 left-2 flex flex-wrap gap-1">
+<span class="bg-accent-gold/90 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Chef's Special</span>
+</div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Royal Maharaja Burger</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹499</p>
+</div>
+</div>
+<!-- Food Card 3 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Iced caramel latte with whipped cream" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCducz9NECZabMO_1C3LN4RQ6l_tQZa2HtYp_7BOsByf5NlvotySb7Xtm0wsp4N9WR3aT6J9KTxQKXKor5PVZ5zq-kwrNPqV0ZI16WgFTuuYU8k0hZBz58bOJ0R2R81BDb4kEoOv22sr9ry9SW_Ue2M5qtwJdaPXx0qI_AvCaepQ05Uvo8SpsRElbxeOh7qGv2jCP5VmouIz3jp2-vgE81bG7PE_0Cn0wAd7COGxZQEC8S3vplMxeThkRvBITI_oFeeZsc7lcZVF08"/>
+<div class="absolute inset-0 food-gradient"></div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Iced Caramel Frappé</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹289</p>
+</div>
+</div>
+<!-- Food Card 4 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Plate of classic Hakka noodles with vegetables" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbFzLN0fubcFFVL-Or3NTuy0IIpoDf2GBUd5tqep-byvc9v9nEQBoxNnl7yoorgqtU5OBn_b9GC1wRxuxo07GJYnFz9Eyd5aAtWBdnEXoi6W4OFVYytILO7LUObrV3TDJlrfxF0nfTx6MMYOpU7NsthvbhCuh0qkkpAAhAWj4ff68NkwtXbxobmOE0eaLloQtSCaTFMtSLbwpbM8E_a4gn7opq4vbnb_CUW_0VHGBTr-NudSNAojutwP6nF2sKG98qPKOKjNAU1wQ"/>
+<div class="absolute inset-0 food-gradient"></div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Szechuan Noodles</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹429</p>
+</div>
+</div>
+<!-- Food Card 5 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Assorted donuts in a bakery display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4pby_nB3VxHUQXcwmyWKKP-RzTSO5Q4MOmLc8tgkjj1IKJRlZh9mvjn9pT3puJFAXJvbStFJv4ZMwRS3vTennvWUvTwS4OwQI-iLXVhMLvrTeYIc3EjrpsFuUKh61B87TDpLOE9NYeVuw6goR4ZWgGz3njAlOfDN8m_VXd7Eh5zHD6nGABPnCAaHOey-QA2cq2d5mmM-4Dp33LgNuMFPIfoxv0t-Rh4Ztopniqd9JkGQQixFZjdvbFkpU7nUV0izyZIWBCA8lfn0"/>
+<div class="absolute inset-0 food-gradient"></div>
+<div class="absolute top-2 left-2 flex flex-wrap gap-1">
+<span class="bg-accent-teal/90 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Vegan</span>
+</div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Glazed Bliss Donut</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹129</p>
+</div>
+</div>
+<!-- Food Card 6 -->
+<div class="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Fluffy pancakes with syrup and butter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5jll9gpfZNwxR5Sd6TRPDil_O1BqC2BaHbk_483G_gU0RSqBEzt4-gA37R0oLZ3X0rxorl26Xv789xsBsDuzsNitKnfWAc2WHJnkiyry6lVa0L8r6TEO7EUzHEAutlDTxn8oqQE44Bw-b9HtQSYHv2AniR4-6huBilVB1kiEumW1AduirZvdrypF38t5rHqGmkJ4-sFbg-hWyOjaBqePbaREtldKsXTxzNEcoRDy22d7TdYinFlmdUp1aXkKCumvMxqIazdbhD6o"/>
+<div class="absolute inset-0 food-gradient"></div>
+<button class="absolute top-2 right-2 h-8 w-8 bg-accent-coral rounded-full flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+<div class="absolute bottom-3 left-3 right-3 text-white">
+<p class="font-poppins font-semibold text-sm leading-tight">Classic Pancakes</p>
+<p class="font-poppins text-xs opacity-90 mt-0.5">₹389</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1">restaurant_menu</span>
+<span class="text-[10px] font-bold">Menu</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-[10px] font-medium">Orders</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="text-[10px] font-medium">Rewards</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Account</span>
+</a>
+</nav>
+</body></html>

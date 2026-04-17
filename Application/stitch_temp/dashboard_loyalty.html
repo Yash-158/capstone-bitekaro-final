@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0d59f2",
+              "background-light": "#f5f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Poppins", "Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<title>Loyalty Program Leaderboard</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar - Desktop only for context, but designed for the request -->
+<aside class="hidden md:flex w-[240px] flex-col bg-gradient-to-b from-primary to-blue-700 text-white p-6">
+<div class="flex items-center gap-3 mb-10">
+<div class="bg-white/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-white">coffee</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">CafeSaaS</h1>
+</div>
+<nav class="space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-white/10" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">loyalty</span>
+<span class="font-medium">Loyalty</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-10 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 md:px-8 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 md:hidden">
+<span class="material-symbols-outlined text-primary text-3xl">menu</span>
+</div>
+<h2 class="text-lg md:text-2xl font-bold text-slate-900 dark:text-slate-100">Loyalty Management</h2>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center overflow-hidden">
+<img alt="Profile" data-alt="Small profile avatar for cafe manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbtAduJftn8nY014xXPy8nz0uOQVLKbQghk_Q58ukRAywoMoUziMV9dWBnqupz_BzwwojL3jNTYRl9g8BzIgi0TtH9bmlQRS7v-kR2cXQwboKlVwq8fTdM-OovVUR0-IC0mitXSWgLy7ACpGxY8TS48oyhRWO6_y2l433BM7Tx8jDw4n3e9RupLskIRrbS-hk-5JHq8f2eVBpiAUARmL6OkiFDpjuXBcj9NblqoQtSVLKH5HVGSonGT9tWWPUdgPuurMDDPEGc95eq"/>
+</div>
+</div>
+</header>
+<div class="p-4 md:p-8 space-y-8">
+<!-- Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Members Card -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Members</p>
+<h3 class="text-3xl font-bold text-amber-600">1,284</h3>
+</div>
+<div class="p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+<span class="material-symbols-outlined text-amber-600">person_add</span>
+</div>
+</div>
+<div class="h-16 w-full flex items-end">
+<svg class="w-full h-full text-amber-200 dark:text-amber-900/30" preserveaspectratio="none" viewbox="0 0 100 30">
+<path d="M0,25 Q15,5 30,20 T60,10 T100,25" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-green-500 mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12.5% this month
+                        </p>
+</div>
+<!-- Points Issued Card -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Points Issued</p>
+<h3 class="text-3xl font-bold text-primary">45.2k</h3>
+</div>
+<div class="p-2 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary">toll</span>
+</div>
+</div>
+<div class="h-16 w-full flex items-end">
+<svg class="w-full h-full text-primary/20" preserveaspectratio="none" viewbox="0 0 100 30">
+<path d="M0,15 Q20,25 40,10 T80,20 T100,5" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-green-500 mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> +5.2% this month
+                        </p>
+</div>
+<!-- Points Redeemed Card -->
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Points Redeemed</p>
+<h3 class="text-3xl font-bold text-[#FF7F50]">32.8k</h3>
+</div>
+<div class="p-2 bg-coral-50 dark:bg-coral-900/20 rounded-lg" style="background-color: rgba(255,127,80,0.1)">
+<span class="material-symbols-outlined" style="color: #FF7F50">redeem</span>
+</div>
+</div>
+<div class="h-16 w-full flex items-end">
+<svg class="w-full h-full" preserveaspectratio="none" style="color: rgba(255,127,80,0.2)" viewbox="0 0 100 30">
+<path d="M0,10 Q25,30 50,15 T100,20" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+</svg>
+</div>
+<p class="text-xs font-semibold text-red-500 mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_down</span> -2.1% this month
+                        </p>
+</div>
+</div>
+<!-- Leaderboard Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-xl font-bold">Loyalty Leaderboard</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Top performing customers based on points earned</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="pl-10 pr-4 py-2 bg-background-light dark:bg-background-dark border-none rounded-lg text-sm focus:ring-2 focus:ring-primary w-full md:w-64" placeholder="Search customer..." type="text"/>
+</div>
+<button class="p-2 bg-background-light dark:bg-background-dark rounded-lg text-slate-500">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Rank</th>
+<th class="px-6 py-4">Customer</th>
+<th class="px-6 py-4">Phone</th>
+<th class="px-6 py-4 text-center">Points</th>
+<th class="px-6 py-4">Total Spent</th>
+<th class="px-6 py-4">Member Since</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Rank 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-2xl">🥇</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-xs">JD</div>
+<span class="font-bold">John Doe</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">XXXXXX4512</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-bold rounded-full text-sm">12,450</span>
+</td>
+<td class="px-6 py-4 font-semibold">$1,240.00</td>
+<td class="px-6 py-4 text-sm text-slate-500">Oct 12, 2023</td>
+</tr>
+<!-- Rank 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-2xl">🥈</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-xs">AS</div>
+<span class="font-bold">Alice Smith</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">XXXXXX8921</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-bold rounded-full text-sm">10,120</span>
+</td>
+<td class="px-6 py-4 font-semibold">$980.50</td>
+<td class="px-6 py-4 text-sm text-slate-500">Nov 05, 2023</td>
+</tr>
+<!-- Rank 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-2xl">🥉</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-orange-100 text-orange-700 font-bold flex items-center justify-center text-xs">MR</div>
+<span class="font-bold">Mike Ross</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">XXXXXX1122</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 font-bold rounded-full text-sm">9,840</span>
+</td>
+<td class="px-6 py-4 font-semibold">$855.00</td>
+<td class="px-6 py-4 text-sm text-slate-500">Jan 21, 2024</td>
+</tr>
+<!-- Rank 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-400 pl-10">4</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">SL</div>
+<span class="font-bold">Sarah Lane</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">XXXXXX6734</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-primary/10 text-primary font-bold rounded-full text-sm">8,210</span>
+</td>
+<td class="px-6 py-4 font-semibold">$720.25</td>
+<td class="px-6 py-4 text-sm text-slate-500">Feb 14, 2024</td>
+</tr>
+<!-- Rank 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 font-bold text-slate-400 pl-10">5</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">TW</div>
+<span class="font-bold">Tom West</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">XXXXXX9001</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 bg-primary/10 text-primary font-bold rounded-full text-sm">7,450</span>
+</td>
+<td class="px-6 py-4 font-semibold">$640.80</td>
+<td class="px-6 py-4 text-sm text-slate-500">Mar 02, 2024</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<span class="text-sm text-slate-500">Showing 1-5 of 1,284 members</span>
+<div class="flex gap-2">
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50" disabled="">Previous</button>
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom NavBar (Mobile Only) -->
+<div class="fixed bottom-0 left-0 right-0 z-50 md:hidden flex gap-2 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md px-4 pb-6 pt-2">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-[10px] font-semibold uppercase">Dash</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">loyalty</span>
+<p class="text-[10px] font-semibold uppercase">Loyalty</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">group</span>
+<p class="text-[10px] font-semibold uppercase">Users</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-[10px] font-semibold uppercase">Settings</p>
+</a>
+</div>
+</div>
+</body></html>

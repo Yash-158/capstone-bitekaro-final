@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>BiteKaro One — Live Orders</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#1565C0",
+            "background-light": "#F0F4FF",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Poppins", "sans-serif"],
+            "sans": ["Poppins", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "16px", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+  <style>
+    body { min-height: max(884px, 100dvh); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @media (max-width: 768px) {
+      .mobile-sidebar-open { transform: translateX(0) !important; }
+      .mobile-overlay-open { display: block !important; }
+    }
+    .status-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 600; font-size: 11px; text-transform: uppercase; }
+    .status-paid { background: #e8f5e9; color: #2e7d32; }
+    .status-pending { background: #fff3e0; color: #ef6c00; }
+  </style>
+</head>
+<body class="bg-[#F0F4FF] font-display antialiased text-slate-800 flex h-screen overflow-hidden">
+  
+  <!-- Mobile Header & Hamburger -->
+  <div class="md:hidden flex items-center justify-between bg-white p-4 shadow-sm z-40 fixed top-0 w-full hover:shadow-md transition-shadow">
+    <div class="font-bold text-[#0D47A1] text-sm tracking-wider">BUSINESS DASHBOARD</div>
+    <button onclick="toggleSidebar()" class="p-2 bg-slate-100 rounded-lg text-slate-600">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+  
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-50 flex w-64 flex-col shrink-0 bg-gradient-to-b from-[#0D47A1] to-[#1565C0] text-white transition-transform duration-300 transform -translate-x-full md:translate-x-0 pt-[68px] md:pt-0">
+    <div class="p-6 flex flex-col items-center border-b border-white/10 hidden md:flex">
+      <div class="mb-2 flex items-center justify-center rounded-2xl bg-white shadow-lg p-2" style="height: 56px; width: 100%;">
+        <img src="/public/images/logo.png" alt="BiteKaro" onerror="this.style.display='none'" style="height:100%; object-fit:contain;">
+      </div>
+      <span class="text-[10px] font-bold uppercase tracking-[2px] text-white/80 mt-2">BUSINESS DASHBOARD</span>
+    </div>
+    
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto w-full">
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="index.html">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="menu-manager.html">
+        <span class="material-symbols-outlined text-[#FFB300]">restaurant_menu</span>
+        <span class="font-medium">Menu Manager</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white bg-white/20 rounded-lg transition-colors font-bold" href="orders.html">
+        <span class="material-symbols-outlined text-[#FF6B35]">shopping_cart</span>
+        <span class="font-medium">Live Orders</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="customers.html">
+        <span class="material-symbols-outlined text-[#4DB6AC]">group</span>
+        <span class="font-medium">Customers</span>
+      </a>
+      <a class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors" href="loyalty-manager.html">
+        <span class="material-symbols-outlined text-[#CE93D8]">loyalty</span>
+        <span class="font-medium">Loyalty</span>
+      </a>
+    </nav>
+    <div class="p-4 border-t border-white/10 w-full mt-auto">
+      <button class="flex items-center gap-3 w-full px-4 py-3 text-white/70 hover:text-white hover:bg-red-500/20 rounded-lg transition-colors" onclick="logout()">
+        <span class="material-symbols-outlined">logout</span>
+        <span class="font-medium">Sign Out</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 bg-[#F0F4FF] h-screen overflow-hidden pt-[68px] md:pt-0">
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between p-6 md:px-8 bg-white border-b border-slate-200 shrink-0">
+      <div>
+        <h2 class="text-2xl font-bold text-[#0D47A1]">Live Orders</h2>
+        <p class="text-sm text-slate-500 mt-1 hidden md:block">Manage and track active orders</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+          </span>
+          <span class="text-xs font-bold text-green-700 hidden sm:inline">Socket.io Connected</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Kanban & Completed -->
+    <div class="flex-1 overflow-y-auto no-scrollbar pb-10">
+      <!-- Kanban Board Area -->
+      <div class="overflow-x-auto flex gap-6 p-6 md:px-8 no-scrollbar min-h-[400px]" id="kanban">
+        <!-- Column: Received -->
+        <div class="flex flex-col w-80 shrink-0 h-full">
+          <div class="flex items-center justify-between mb-4 border-t-4 border-[#1565C0] pt-2">
+            <div class="flex items-center gap-2">
+              <h2 class="font-bold text-[#0D47A1]">Received</h2>
+              <span id="countReceived" class="bg-blue-100 text-[#1565C0] text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </div>
+          </div>
+          <div id="colReceived" class="flex-1 space-y-4 no-scrollbar pb-4"></div>
+        </div>
+        
+        <!-- Column: In Preparation -->
+        <div class="flex flex-col w-80 shrink-0 h-full">
+          <div class="flex items-center justify-between mb-4 border-t-4 border-[#FFB300] pt-2">
+            <div class="flex items-center gap-2">
+              <h2 class="font-bold text-slate-800">In Preparation</h2>
+              <span id="countPreparing" class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </div>
+          </div>
+          <div id="colPreparing" class="flex-1 space-y-4 no-scrollbar pb-4"></div>
+        </div>
+
+        <!-- Column: Ready -->
+        <div class="flex flex-col w-80 shrink-0 h-full">
+          <div class="flex items-center justify-between mb-4 border-t-4 border-[#00897B] pt-2">
+            <div class="flex items-center gap-2">
+              <h2 class="font-bold text-slate-800">Ready for Pickup</h2>
+              <span id="countReady" class="bg-teal-100 text-teal-700 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            </div>
+          </div>
+          <div id="colReady" class="flex-1 space-y-4 no-scrollbar pb-4"></div>
+        </div>
+      </div>
+
+      <!-- Completed Accordion section -->
+      <div class="px-6 md:px-8 mb-10">
+        <div class="completed-section">
+          <div class="completed-header" onclick="toggleCompleted()">
+            <h3>Completed Orders Today</h3>
+            <span id="completed-count" class="badge bg-blue-100 text-[#1565C0] text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+            <span class="toggle-icon material-symbols-outlined ml-2 transition-transform duration-300">expand_more</span>
+          </div>
+          <div id="completed-orders-body" class="completed-body" style="display: none;">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="completed-tbody">
+                <!-- Data populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const API = 'http://localhost:3000/api';
+    const token = localStorage.getItem('bitekaro_token');
+    if (!token) window.location.href = 'login.html';
+    const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
+
+    let orderMap = {};
+
+    // ── Socket.io ──
+    const socket = io('http://localhost:3000');
+    socket.on('new_order', order => {
+      orderMap[order.id] = order;
+      renderKanban();
+      showToast('New order received! #' + order.token_number, 'success');
+    });
+    socket.on('order_updated', order => {
+      orderMap[order.id] = order;
+      renderKanban();
+    });
+
+    // ── Load today's orders ──
+    async function loadOrders() {
+      try {
+        const res = await fetch(API + '/orders/today', { headers });
+        const data = await res.json();
+        orderMap = {};
+        (data.orders || []).forEach(o => orderMap[o.id] = o);
+        renderKanban();
+      } catch(e) { console.error(e); }
+    }
+
+    function renderKanban() {
+      const orders = Object.values(orderMap).sort((a,b) => new Date(a.created_at) - new Date(b.created_at));
+      const received = orders.filter(o => ['received', 'pending', 'new'].includes(o.status));
+      const preparing = orders.filter(o => ['preparing', 'in_preparation'].includes(o.status));
+      const ready = orders.filter(o => ['ready', 'ready_for_pickup'].includes(o.status));
+
+      document.getElementById('countReceived').textContent = received.length;
+      document.getElementById('countPreparing').textContent = preparing.length;
+      document.getElementById('countReady').textContent = ready.length;
+
+      document.getElementById('colReceived').innerHTML = received.map(o => orderCard(o, 'Start Preparing', 'bg-[#FFB300] hover:bg-yellow-500 text-white', 'preparing')).join('');
+      document.getElementById('colPreparing').innerHTML = preparing.map(o => orderCard(o, 'Mark Ready', 'bg-[#00897B] hover:bg-teal-600 text-white', 'ready')).join('');
+      document.getElementById('colReady').innerHTML = ready.map(o => orderCard(o, 'Complete Order', 'bg-slate-200 hover:bg-slate-300 text-slate-700', 'completed')).join('');
+
+      renderCompletedOrders(orders);
+    }
+
+    function renderCompletedOrders(orders) {
+      const tbody = document.getElementById('completed-tbody')
+      const countEl = document.getElementById('completed-count')
+      
+      const completed = orders.filter(o => o.status === 'completed' || o.status === 'cancelled').sort((a,b) => new Date(b.created_at) - new Date(a.created_at));
+      countEl.textContent = completed.length
+      
+      if (completed.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#90A4AE">No completed orders yet today</td></tr>'
+        return
+      }
+      
+      tbody.innerHTML = completed.map(order => {
+        const items = typeof order.items === 'string' 
+          ? JSON.parse(order.items) : order.items
+        const itemSummary = items.map(i => i.item_name + ' x' + i.quantity).join(', ')
+        const time = new Date(order.created_at).toLocaleTimeString('en-IN', 
+          {hour: '2-digit', minute: '2-digit'})
+        
+        return `<tr>
+          <td><strong>#${order.token_number}</strong></td>
+          <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${itemSummary}">${itemSummary}</td>
+          <td><strong>Rs.${Number(order.total).toFixed(0)}</strong></td>
+          <td><span class="status-badge status-paid">${order.payment_method || 'cash'}</span></td>
+          <td>${time}</td>
+          <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+        </tr>`
+      }).join('')
+    }
+
+    function orderCard(o, actionLabel, actionClass, nextStatus) {
+      let items = [];
+      try { items = typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || []); } catch(e) {}
+      
+      const itemStr = items.map(i => `<p class="text-sm text-slate-600 flex justify-between"><span>${i.quantity || 1}x ${i.item_name || i.name || i.item_id}</span></p>`).join('');
+      const time = new Date(o.created_at).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+      const total = Number(o.total_amount || o.total || 0);
+      return `
+        <div class="bg-white p-4 rounded-xl shadow-[0_2px_8px_rgba(21,101,192,0.06)] border border-slate-100 flex flex-col gap-3 transition-transform hover:-translate-y-1 duration-300">
+          <div class="flex justify-between items-start">
+            <h3 class="text-xl font-extrabold text-[#0D47A1]">#${o.token_number || o.id}</h3>
+            <span class="text-xs text-slate-400 font-medium">${time}</span>
+          </div>
+          <div class="space-y-1 my-1">
+            ${itemStr}
+          </div>
+          <div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-auto">
+            <span class="text-[#1565C0] font-bold text-lg">₹${total.toFixed(0)}</span>
+            <div class="bg-blue-50 text-[#1565C0] text-[10px] uppercase font-bold px-2 py-1 rounded border border-blue-100">${o.payment_method || 'cash'}</div>
+          </div>
+          <button class="w-full ${actionClass} font-bold py-2.5 rounded-lg transition-colors text-sm mt-3 border border-transparent" onclick="updateStatus('${o.id}','${nextStatus}')">
+            ${actionLabel}
+          </button>
+        </div>`;
+    }
+
+    async function updateStatus(id, status) {
+      try {
+        await fetch(API + '/orders/' + id + '/status', { method: 'PATCH', headers, body: JSON.stringify({ status }) });
+      } catch(e) { showToast('Update failed', 'error'); }
+    }
+
+    function toggleCompleted() {
+      const body = document.getElementById('completed-orders-body');
+      const arrow = document.querySelector('.toggle-icon');
+      if(body.style.display === 'none') {
+        body.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        body.style.display = 'none';
+        arrow.style.transform = '';
+      }
+    }
+
+    function showToast(msg, type = 'info') {
+      let c = document.querySelector('.toast-container');
+      if (!c) { c = document.createElement('div'); c.className = 'toast-container fixed bottom-4 right-4 z-50 flex flex-col gap-2'; document.body.appendChild(c); }
+      const t = document.createElement('div'); 
+      t.className = `px-4 py-3 rounded-lg shadow-lg font-medium text-white transition-opacity duration-300 ${type === 'error' ? 'bg-red-500' : 'bg-[#00897B]'}`; 
+      t.textContent = msg; 
+      c.appendChild(t);
+      setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    function toggleSidebar() { 
+      document.getElementById('sidebar').classList.toggle('-translate-x-full');
+      document.getElementById('sidebarOverlay').classList.toggle('hidden'); 
+    }
+    function logout() { localStorage.removeItem('bitekaro_token'); localStorage.removeItem('bitekaro_user'); window.location.href = 'login.html'; }
+
+    loadOrders();
+  </script>
+</body>
+</html>

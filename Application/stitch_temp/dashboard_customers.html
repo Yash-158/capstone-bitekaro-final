@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Poppins", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Poppins', sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-20">
+<header class="sticky top-0 z-20 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-4 flex items-center justify-between border-b border-primary/10">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Analytics</h1>
+</div>
+<div class="flex gap-2">
+<button class="size-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="User profile avatar image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeFHAN8fpeUMY0PN4AfhTUXPVuO6R1CW1fJPkmrzENEZrHc2eHKleofplF-9x2xlzB3_0NlD3fxl4dJI5LuG4nXM1rDGZ-RBTlqNmGtlayz_7Jhg4lk7mixftFWeYvfWq00DeZIp4M92HakMDYxTz6NOB0id7SLo-rjcLvju5moMFFgKHXdlIcEFXC8jHFbfgEIVUOSdoBPhSDLesZ5iOsOqRNx8k2EehKVufIHCFyBmMbWVVJ9mvkZb0aLMEj0z0qddxQhb5fIVrS"/>
+</button>
+</div>
+</header>
+<main class="p-4 space-y-6">
+<section class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
+<div class="min-w-[160px] flex-1 flex flex-col gap-2 rounded-xl p-5 bg-primary text-white shadow-lg shadow-primary/20">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-white/70">groups</span>
+<span class="text-xs font-semibold bg-white/20 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<p class="text-white/80 text-sm font-medium">Total Customers</p>
+<p class="text-2xl font-bold leading-tight">1,284</p>
+</div>
+<div class="min-w-[160px] flex-1 flex flex-col gap-2 rounded-xl p-5 bg-[#009688] text-white shadow-lg shadow-[#009688]/20">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-white/70">payments</span>
+<span class="text-xs font-semibold bg-white/20 px-2 py-0.5 rounded-full">+5%</span>
+</div>
+<p class="text-white/80 text-sm font-medium">Avg. Spend</p>
+<p class="text-2xl font-bold leading-tight">$12.50</p>
+</div>
+<div class="min-w-[160px] flex-1 flex flex-col gap-2 rounded-xl p-5 bg-[#ff6b6b] text-white shadow-lg shadow-[#ff6b6b]/20">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-white/70">stars</span>
+<span class="text-xs font-semibold bg-white/20 px-2 py-0.5 rounded-full">+8%</span>
+</div>
+<p class="text-white/80 text-sm font-medium">Top Points</p>
+<p class="text-2xl font-bold leading-tight">45,200</p>
+</div>
+</section>
+<section class="flex gap-2">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-white dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary text-sm shadow-sm" placeholder="Search customer records..." type="text"/>
+</div>
+<button class="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">tune</span>
+</button>
+</section>
+<section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+<h3 class="font-bold text-slate-800 dark:text-white">Recent Activity</h3>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full">Updated 2m ago</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-900/50">
+<tr>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">#</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Customer</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Points</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Spend</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-4 py-4 text-sm font-medium text-slate-400">1</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">JD</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-sm">John Doe</p>
+<p class="text-xs text-slate-500">XXXXXX4512</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-amber-500 fill-amber-500">star</span>
+<span class="text-sm font-semibold">1,420</span>
+</div>
+</td>
+<td class="px-4 py-4 text-sm font-semibold text-slate-700 dark:text-slate-300">$485.20</td>
+<td class="px-4 py-4">
+<button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors whitespace-nowrap">Adjust</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-4 py-4 text-sm font-medium text-slate-400">2</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-[#ff6b6b]/20 text-[#ff6b6b] flex items-center justify-center font-bold text-xs">AS</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-sm">Alice Smith</p>
+<p class="text-xs text-slate-500">XXXXXX8821</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-amber-500 fill-amber-500">star</span>
+<span class="text-sm font-semibold">980</span>
+</div>
+</td>
+<td class="px-4 py-4 text-sm font-semibold text-slate-700 dark:text-slate-300">$210.00</td>
+<td class="px-4 py-4">
+<button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors whitespace-nowrap">Adjust</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-4 py-4 text-sm font-medium text-slate-400">3</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-[#009688]/20 text-[#009688] flex items-center justify-center font-bold text-xs">MR</div>
+<div>
+<p class="font-bold text-slate-900 dark:text-white text-sm">Mike Ross</p>
+<p class="text-xs text-slate-500">XXXXXX1190</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-amber-500 fill-amber-500">star</span>
+<span class="text-sm font-semibold">850</span>
+</div>
+</td>
+<td class="px-4 py-4 text-sm font-semibold text-slate-700 dark:text-slate-300">$185.50</td>
+<td class="px-4 py-4">
+<button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary rounded-lg hover:bg-primary/10 transition-colors whitespace-nowrap">Adjust</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-700">
+<button class="w-full text-center text-sm font-semibold text-primary hover:underline">View All Customers</button>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-6 py-3 flex items-center justify-between z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-primary">person_search</span>
+<span class="text-[10px] font-medium">Customers</span>
+</a>
+<div class="relative -top-8 bg-primary size-14 rounded-full flex items-center justify-center shadow-lg shadow-primary/40 border-4 border-background-light dark:border-background-dark">
+<span class="material-symbols-outlined text-white text-3xl">add</span>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">loyalty</span>
+<span class="text-[10px] font-medium">Loyalty</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</nav>
+</body></html>
