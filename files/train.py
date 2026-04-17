@@ -43,7 +43,7 @@ warnings.filterwarnings("ignore")
 
 from menu import ALL_ITEMS, ITEM_IDS, ID_TO_IDX, IDX_TO_ID, ITEM_LOOKUP
 
-BASE   = os.path.join(os.path.dirname(__file__), "..")
+BASE   = os.path.dirname(os.path.abspath(__file__))
 PROC   = os.path.join(BASE, "data", "processed")
 MODELS = os.path.join(BASE, "models")
 os.makedirs(MODELS, exist_ok=True)

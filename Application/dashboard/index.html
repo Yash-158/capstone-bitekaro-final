@@ -4,13 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BiteKaro One — Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/dashboard.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-</head>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -37,7 +35,6 @@
     .insight-item { padding: 16px; margin-bottom: 12px; background: white; border-radius: 12px; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .insight-icon { font-size: 20px; }
   </style>
-  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body class="bg-[#F0F4FF] font-display antialiased text-slate-800 flex h-screen overflow-hidden">
   
@@ -241,7 +238,7 @@
   </main>
 
   <script>
-    const API = 'http://localhost:3000/api';
+    const API = window.location.origin + '/api';
     const token = localStorage.getItem('bitekaro_token');
     if (!token) window.location.href = 'login.html';
     const user = JSON.parse(localStorage.getItem('bitekaro_user') || '{}');

@@ -31,14 +31,6 @@ router.get('/all', authenticateToken, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-// GET /api/menu/all — all items including unavailable (protected)
-router.get('/all', authenticateToken, async (req, res, next) => {
-  try {
-    const result = await query('SELECT * FROM menu_items ORDER BY display_order ASC');
-    res.json({ success: true, items: result.rows });
-  } catch (err) { next(err); }
-});
-
 // GET /api/menu/:id — single item
 router.get('/:id', async (req, res, next) => {
   try {

@@ -4,17 +4,17 @@ BiteKaro — Feature Engineering Report
 
 Dataset Summary
 ---------------
-  Customers             : 3,000
+  Customers             : 1,870
   Menu Items            : 25
-  Total Interactions    : 147,950
-  Total Orders (baskets): 60,403
+  Total Interactions    : 18,506
+  Total Orders (baskets): 9,410
 
 Interaction Matrix
 ------------------
-  Shape     : 3000 × 25
-  Non-zero  : 55,532
-  Sparsity  : 0.2596
-  Density   : 0.7404
+  Shape     : 1870 × 25
+  Non-zero  : 10,684
+  Sparsity  : 0.7715
+  Density   : 0.2285
 
 Item Features  (42 features per item)
 --------------

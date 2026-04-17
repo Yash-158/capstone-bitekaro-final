@@ -28,8 +28,8 @@ import joblib
 
 from menu import ALL_ITEMS, ITEM_IDS, ID_TO_IDX, ITEM_LOOKUP
 
-BASE    = os.path.join(os.path.dirname(__file__), "..")
-PROC    = os.path.join(BASE, "data", "processed")
+BASE  = os.path.dirname(os.path.abspath(__file__))
+PROC  = os.path.join(BASE, "data", "processed")
 os.makedirs(PROC, exist_ok=True)
 
 print("=" * 60)

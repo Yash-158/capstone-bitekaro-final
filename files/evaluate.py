@@ -39,7 +39,7 @@ from sklearn.decomposition import PCA
 from menu import ALL_ITEMS, ITEM_IDS, ITEM_LOOKUP, ID_TO_IDX
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
-BASE      = os.path.dirname(os.path.abspath(__file__))
+BASE = os.path.dirname(os.path.abspath(__file__))
 MODELS    = os.path.join(BASE, "models")
 PROC      = os.path.join(BASE, "data", "processed")
 EVAL_DIR  = os.path.join(BASE, "data", "eval_plots")
@@ -442,7 +442,7 @@ ax.text(0.5, 0.87, "GLS University | CSE Capstone Project | AI-Powered Smart Kio
         ha="center", va="top")
 
 metrics = [
-    ("Dataset",          f"3,000 customers  |  60,403 orders  |  147,950 interactions"),
+    ("Dataset",          f"1,870 customers  |  9,410 orders  |  18,506 interactions (real cafe data)"),
     ("Menu",             f"25 items across 5 categories (Indian cafe context)"),
     ("Model A",          f"Association Rules  —  36 rules  |  Max Lift: {RULES_DF['lift'].max():.3f}"),
     ("",                 f"Top Rule: {top_rule['antecedent_name']} -> {top_rule['consequent_name']}  "
@@ -489,9 +489,9 @@ BiteKaro — Model Evaluation Summary
 
 Dataset
 -------
-  Customers             : 3,000
-  Orders                : 60,403
-  Item Interactions     : 147,950
+  Customers             : 1,870
+  Orders                : 9,410
+  Item Interactions     : 18,506 (sourced from real cafe transactions)
   Menu Items            : 25 (5 categories)
 
 Model A — Association Rules
@@ -505,8 +505,8 @@ Model A — Association Rules
 Model B — SVD Collaborative Filtering
 ---------------------------------------
   n_components          : 3
-  Explained Variance    : 33.2%
-  Matrix Density        : 0.740
+  Explained Variance    : 87.2%
+  Matrix Density        : 0.229
   Evaluation Method     : Leave-Last-Order-Out
 
 Performance Metrics

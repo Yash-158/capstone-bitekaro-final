@@ -4,46 +4,46 @@ BiteKaro — Model Evaluation Summary
 
 Dataset
 -------
-  Customers             : 3,000
-  Orders                : 60,403
-  Item Interactions     : 147,950
+  Customers             : 1,870
+  Orders                : 9,410
+  Item Interactions     : 18,506 (sourced from real cafe transactions)
   Menu Items            : 25 (5 categories)
 
 Model A — Association Rules
 ----------------------------
-  Rules Found           : 36
-  Max Lift              : 1.4547
-  Max Confidence        : 0.2022
-  Top Rule              : Kulfi -> Mango Shake
-                          conf=0.161, lift=1.455
+  Rules Found           : 27
+  Max Lift              : 1.8380
+  Max Confidence        : 0.5671
+  Top Rule              : Hot Chocolate -> Gulab Jamun
+                          conf=0.217, lift=1.838
 
 Model B — SVD Collaborative Filtering
 ---------------------------------------
   n_components          : 3
-  Explained Variance    : 33.2%
-  Matrix Density        : 0.740
+  Explained Variance    : 87.2%
+  Matrix Density        : 0.229
   Evaluation Method     : Leave-Last-Order-Out
 
 Performance Metrics
 --------------------
   K     Precision    Recall      F1
   ---   ---------    ------      --
-  1     0.1910       0.0744      0.1071
-  2     0.1865       0.1456      0.1635
-  3     0.1853       0.2156      0.1993
-  5     0.1760       0.3358      0.2309
-  8     0.1628       0.4950      0.2450
-  10    0.1571       0.5927      0.2484
+  1     0.1340       0.0651      0.0876
+  2     0.1160       0.1211      0.1185
+  3     0.1093       0.1692      0.1328
+  5     0.1002       0.2604      0.1447
+  8     0.1027       0.4171      0.1649
+  10    0.1026       0.5124      0.1710
 
-  Best F1               : 0.2484 at K=10
+  Best F1               : 0.1710 at K=10
 
 Category Hit Rates
 -------------------
-  hot_beverages          0.2612
-  cold_beverages         0.5866
-  snacks                 0.2995
-  meals                  0.2125
-  desserts               0.0062
+  hot_beverages          0.2101
+  cold_beverages         0.1810
+  snacks                 0.2490
+  meals                  0.1522
+  desserts               0.2844
 
 Context Layer
 --------------

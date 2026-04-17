@@ -28,11 +28,11 @@ const BiteKaroApp = {
     } else {
       this.cart.push({
         cartItemId: Date.now() + Math.random().toString(36).slice(2, 6),
-        item_id:    item.item_id || item.id,
-        item_name:  item.item_name || item.name,
-        price:      parseFloat(item.price),
-        image_url:  item.image_url || '',
-        category:   item.category || '',
+        item_id: item.item_id || item.id,
+        item_name: item.item_name || item.name,
+        price: parseFloat(item.price),
+        image_url: item.image_url || '',
+        category: item.category || '',
         customizations,
         quantity,
         item_total: parseFloat(item.price) * quantity
@@ -81,7 +81,7 @@ const BiteKaroApp = {
     try {
       sessionStorage.setItem('bk_cart', JSON.stringify(this.cart));
       if (this.customer) sessionStorage.setItem('bk_customer', JSON.stringify(this.customer));
-      if (this.mood)     sessionStorage.setItem('bk_mood', this.mood);
+      if (this.mood) sessionStorage.setItem('bk_mood', this.mood);
     } catch (e) { /* storage full fallback */ }
   },
 
@@ -124,29 +124,8 @@ const BiteKaroApp = {
   },
 
   // ── Time Helpers ──
-  getCurrentHour()  { return new Date().getHours(); },
+  getCurrentHour() { return new Date().getHours(); },
   getCurrentMonth() { return new Date().getMonth() + 1; },
-
-  // ── Build recommend payload with full context ──
-  // Call this whenever making a POST /api/recommend request
-  buildRecommendPayload(overrides = {}) {
-    let orderHistory = [];
-    try {
-      const stored = sessionStorage.getItem('bk_order_history');
-      if (stored) orderHistory = JSON.parse(stored);
-    } catch (e) { orderHistory = []; }
-
-    return {
-      customer_id:   this.customer?.id    || null,
-      cart_items:    this.cart.map(i => i.item_id),
-      mood:          this.mood             || 'happy',
-      hour:          this.getCurrentHour(),
-      month:         this.getCurrentMonth(),
-      top_k:         5,
-      order_history: orderHistory,
-      ...overrides
-    };
-  },
 
   // ── Cart UI ──
   updateCartUI() {
@@ -169,7 +148,7 @@ const BiteKaroApp = {
       ...rest
     };
     if (body) config.body = JSON.stringify(body);
-    const res  = await fetch(this.API_BASE + endpoint, config);
+    const res = await fetch(this.API_BASE + endpoint, config);
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || data.message || 'API error');
     return data;
