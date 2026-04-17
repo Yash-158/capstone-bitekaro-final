@@ -1,0 +1,41 @@
+
+BiteKaro — Training Report
+============================
+
+Model A: Association Rules
+---------------------------
+  Min support    : 0.02
+  Min confidence : 0.20
+  Min lift       : 1.2
+  Rules found    : 36
+  
+  Top 5 Rules:
+    Kulfi → Mango Shake  (conf=0.161, lift=1.455)
+    Chocolate Muffin → Cold Coffee  (conf=0.202, lift=1.344)
+    Rasgulla → Iced Tea  (conf=0.186, lift=1.294)
+    Kulfi → Cold Coffee  (conf=0.194, lift=1.290)
+    Hot Chocolate → Bread Pakoda  (conf=0.123, lift=1.242)
+
+Model B: SVD Collaborative Filtering
+--------------------------------------
+  Best n_components  : 3
+  Explained Variance : 0.332 (33.2%)
+  Final Precision@5  : 0.0718
+  Final Recall@5     : 0.1145
+
+Hyperparameter Search Results:
+  n=3    P@5=0.0716  R@5=0.1140  F1=0.0880
+  n=5    P@5=0.0708  R@5=0.1129  F1=0.0870
+  n=8    P@5=0.0684  R@5=0.1067  F1=0.0834
+  n=10   P@5=0.0684  R@5=0.1082  F1=0.0838
+  n=12   P@5=0.0660  R@5=0.1041  F1=0.0808
+  n=15   P@5=0.0660  R@5=0.1048  F1=0.0810
+
+Popularity Baseline:
+  Time slots : ['afternoon', 'evening', 'lunch', 'morning']
+  Seasons    : ['autumn', 'monsoon', 'summer', 'winter']
+  
+Models Saved:
+  models/association_rules.pkl
+  models/svd_model.pkl
+  models/popularity_baseline.pkl

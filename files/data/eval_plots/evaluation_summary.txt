@@ -1,0 +1,63 @@
+
+BiteKaro — Model Evaluation Summary
+=====================================
+
+Dataset
+-------
+  Customers             : 3,000
+  Orders                : 60,403
+  Item Interactions     : 147,950
+  Menu Items            : 25 (5 categories)
+
+Model A — Association Rules
+----------------------------
+  Rules Found           : 36
+  Max Lift              : 1.4547
+  Max Confidence        : 0.2022
+  Top Rule              : Kulfi -> Mango Shake
+                          conf=0.161, lift=1.455
+
+Model B — SVD Collaborative Filtering
+---------------------------------------
+  n_components          : 3
+  Explained Variance    : 33.2%
+  Matrix Density        : 0.740
+  Evaluation Method     : Leave-Last-Order-Out
+
+Performance Metrics
+--------------------
+  K     Precision    Recall      F1
+  ---   ---------    ------      --
+  1     0.1910       0.0744      0.1071
+  2     0.1865       0.1456      0.1635
+  3     0.1853       0.2156      0.1993
+  5     0.1760       0.3358      0.2309
+  8     0.1628       0.4950      0.2450
+  10    0.1571       0.5927      0.2484
+
+  Best F1               : 0.2484 at K=10
+
+Category Hit Rates
+-------------------
+  hot_beverages          0.2612
+  cold_beverages         0.5866
+  snacks                 0.2995
+  meals                  0.2125
+  desserts               0.0062
+
+Context Layer
+--------------
+  Mood types            : 4 (tired, thirsty, hungry, happy)
+  Seasons               : 4 (summer, monsoon, autumn, winter)
+  Time slots            : 4 (morning, lunch, afternoon, evening)
+  Total context states  : 64
+
+Charts Saved
+-------------
+  01_precision_recall_at_k.png
+  02_hit_miss_matrix.png
+  03_association_rules.png
+  04_accuracy_by_category.png
+  05_season_context_proof.png
+  06_item_embeddings_pca.png
+  07_summary_scorecard.png

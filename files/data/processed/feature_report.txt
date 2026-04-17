@@ -1,0 +1,40 @@
+
+BiteKaro — Feature Engineering Report
+======================================
+
+Dataset Summary
+---------------
+  Customers             : 3,000
+  Menu Items            : 25
+  Total Interactions    : 147,950
+  Total Orders (baskets): 60,403
+
+Interaction Matrix
+------------------
+  Shape     : 3000 × 25
+  Non-zero  : 55,532
+  Sparsity  : 0.2596
+  Density   : 0.7404
+
+Item Features  (42 features per item)
+--------------
+  Categories  : 5 one-hot columns
+  Tags        : 35 one-hot columns
+  Numerical   : price_norm, cal_norm (2 columns)
+  All tags    : baked, breakfast, chocolate, coffee, cold, comfort, creamy, energizing, filling, fried, fruity, gujarati, healthy, heavy, hot, indian, indulgent, light, meal, monsoon, mumbai, popular, premium, quick, refreshing, seasonal, south-indian, spicy, strong, sweet, tangy, tea, traditional, veg, warm
+
+User Features  (22 features per user)
+-------------
+  Category pcts : pct_hot_bev, pct_cold_bev, pct_snacks, pct_meals, pct_desserts
+  Time pcts     : pct_morning, pct_afternoon, pct_evening
+  Season pcts   : pct_summer, pct_monsoon, pct_winter
+  Profiles      : 5 one-hot columns
+  Numerical     : total_orders_norm, avg_order_value_norm
+
+Files Saved
+-----------
+  data/processed/interaction_matrix.npz
+  data/processed/basket_matrix.csv
+  data/processed/item_features.csv
+  data/processed/user_features.csv
+  data/processed/index_maps.pkl
