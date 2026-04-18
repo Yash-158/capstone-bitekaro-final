@@ -139,7 +139,7 @@ router.get('/history/:phone', async (req, res, next) => {
 
     res.json({
       exists: true,
-      customer: { id: customer.id, name: customer.name, phone: customer.phone, loyalty_points: customer.loyalty_points },
+      customer: { id: customer.id, name: customer.name, phone: customer.phone, loyalty_points: customer.loyalty_points, total_orders: customer.total_orders },
       order_history
     });
   } catch (err) { next(err); }
